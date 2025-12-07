@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Menu, X, Globe, Code, PenTool, Palette, Mail, Phone, MapPin, ExternalLink, Github, Linkedin, Twitter, Facebook } from 'lucide-react';
+import { Menu, X, Globe, Code, PenTool, Palette, Mail, Phone, MapPin, Github, Linkedin, Twitter, Facebook } from 'lucide-react';
 
 // Translation data
 const translations = {
@@ -14,6 +15,7 @@ const translations = {
     home: 'হোম',
     about: 'আমার সম্পর্কে',
     services: 'সার্ভিস',
+    brandName: 'জয়শ্রীরাম সরকার',
     contact: 'যোগাযোগ',
     
     // Hero Section
@@ -69,6 +71,7 @@ const translations = {
     home: 'Home',
     about: 'About',
     services: 'Services',
+    brandName: 'Joysriram Sarkar',
     contact: 'Contact',
     
     // Hero Section
@@ -146,9 +149,9 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div className={`min-h-screen bg-black text-white overflow-x-hidden ${language === 'bn' ? 'font-hind-siliguri' : ''}`}>
       {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md py-4' : 'bg-transparent py-6'}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md py-4' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center space-x-3">
@@ -159,31 +162,31 @@ export default function Portfolio() {
                 className="w-full h-full object-contain"
               />
             </div>
-            <div className="text-2xl font-bold text-yellow-500">
-              Joysriram
+            <div className="text-2xl font-bold bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent">
+              {t.brandName}
             </div>
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             <button onClick={() => scrollToSection('home')} className="hover:text-yellow-500 transition-colors">
-              {t.home}
+              <span className={language === 'bn' ? 'leading-relaxed' : ''}>{t.home}</span>
             </button>
             <button onClick={() => scrollToSection('about')} className="hover:text-yellow-500 transition-colors">
-              {t.about}
+              <span className={language === 'bn' ? 'leading-relaxed' : ''}>{t.about}</span>
             </button>
             <button onClick={() => scrollToSection('services')} className="hover:text-yellow-500 transition-colors">
-              {t.services}
+              <span className={language === 'bn' ? 'leading-relaxed' : ''}>{t.services}</span>
             </button>
             <button onClick={() => scrollToSection('contact')} className="hover:text-yellow-500 transition-colors">
-              {t.contact}
+              <span className={language === 'bn' ? 'leading-relaxed' : ''}>{t.contact}</span>
             </button>
             
             {/* Language Toggle */}
             <Button
               onClick={toggleLanguage}
               variant="outline"
-              className="border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black transition-all"
+              className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black transition-all"
             >
               <Globe className="w-4 h-4 mr-2" />
               {language === 'bn' ? 'EN' : 'BN'}
@@ -196,7 +199,7 @@ export default function Portfolio() {
               onClick={toggleLanguage}
               variant="outline"
               size="sm"
-              className="border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black"
+              className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black"
             >
               <Globe className="w-4 h-4" />
             </Button>
@@ -215,16 +218,16 @@ export default function Portfolio() {
         {isMenuOpen && (
           <div className="md:hidden bg-black/95 backdrop-blur-md border-t border-gray-800">
             <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-              <button onClick={() => scrollToSection('home')} className="text-left hover:text-yellow-500 transition-colors">
+              <button onClick={() => scrollToSection('home')} className="text-left hover:text-amber-500 transition-colors leading-relaxed">
                 {t.home}
               </button>
-              <button onClick={() => scrollToSection('about')} className="text-left hover:text-yellow-500 transition-colors">
+              <button onClick={() => scrollToSection('about')} className="text-left hover:text-amber-500 transition-colors leading-relaxed">
                 {t.about}
               </button>
-              <button onClick={() => scrollToSection('services')} className="text-left hover:text-yellow-500 transition-colors">
+              <button onClick={() => scrollToSection('services')} className="text-left hover:text-amber-500 transition-colors leading-relaxed">
                 {t.services}
               </button>
-              <button onClick={() => scrollToSection('contact')} className="text-left hover:text-yellow-500 transition-colors">
+              <button onClick={() => scrollToSection('contact')} className="text-left hover:text-amber-500 transition-colors leading-relaxed">
                 {t.contact}
               </button>
             </div>
@@ -233,79 +236,105 @@ export default function Portfolio() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-black via-gray-900 to-black">
-        <div className="absolute inset-0 bg-gradient-to-t from-yellow-500/5 to-transparent"></div>
+      <section id="home" className="min-h-screen flex items-center justify-center relative bg-black pt-32">
+        {/* Background Grid and Gradients */}
+        <div className="absolute inset-0 h-full w-full bg-black bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)] opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-amber-500/5 to-transparent"></div>
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
-              {t.headline}
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-              {t.subheadline}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent"
+            >
+              <span className="leading-relaxed">{t.headline}</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed"
+            >
+              <span className="leading-relaxed">{t.subheadline}</span>
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
               <Button
                 onClick={() => scrollToSection('contact')}
-                className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-6 text-lg transition-all transform hover:scale-105"
+                className="bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-semibold px-8 py-6 text-lg transition-all transform hover:scale-105 hover:shadow-[0_0_20px_rgba(251,191,36,0.5)]"
               >
-                {t.startProject}
+                <span className="leading-relaxed">{t.startProject}</span>
               </Button>
               <Button
                 onClick={() => scrollToSection('about')}
                 variant="outline"
-                className="border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-semibold px-8 py-6 text-lg transition-all"
+                className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black font-semibold px-8 py-6 text-lg transition-all"
               >
-                {t.aboutMe}
+                <span className="leading-relaxed">{t.aboutMe}</span>
               </Button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900">
+      <section className="py-20 bg-black">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <Card className="bg-gray-900/50 border-gray-800 text-center p-6 hover:border-yellow-500 transition-all">
-              <CardContent className="p-0">
-                <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-2">{t.experience}</div>
-                <div className="text-sm text-gray-400">{t.experienceLabel}</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-900/50 border-gray-800 text-center p-6 hover:border-yellow-500 transition-all">
-              <CardContent className="p-0">
-                <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-2">{t.projects}</div>
-                <div className="text-sm text-gray-400">{t.projectsLabel}</div>
-                <div className="text-xs text-gray-500 mt-1">{t.examples}</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-900/50 border-gray-800 text-center p-6 hover:border-yellow-500 transition-all">
-              <CardContent className="p-0">
-                <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-2">{t.dedication}</div>
-                <div className="text-sm text-gray-400">{t.dedicationLabel}</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-900/50 border-gray-800 text-center p-6 hover:border-yellow-500 transition-all">
-              <CardContent className="p-0">
-                <div className="text-3xl md:text-4xl font-bold text-yellow-500 mb-2">{t.support}</div>
-                <div className="text-sm text-gray-400">{t.supportLabel}</div>
-              </CardContent>
-            </Card>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
+              <Card className="bg-gray-900/50 border-gray-800 text-center p-6 transition-all duration-300 hover:border-amber-500 hover:shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+                <CardContent className="p-0">
+                  <div className="text-3xl md:text-4xl font-bold text-amber-500 mb-2">{t.experience}</div>
+                  <div className="text-sm text-gray-400 leading-relaxed">{t.experienceLabel}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
+              <Card className="bg-gray-900/50 border-gray-800 text-center p-6 transition-all duration-300 hover:border-amber-500 hover:shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+                <CardContent className="p-0">
+                  <div className="text-3xl md:text-4xl font-bold text-amber-500 mb-2">{t.projects}</div>
+                  <div className="text-sm text-gray-400 leading-relaxed">{t.projectsLabel}</div>
+                  <div className="text-xs text-gray-500 mt-1 leading-relaxed">{t.examples}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
+              <Card className="bg-gray-900/50 border-gray-800 text-center p-6 transition-all duration-300 hover:border-amber-500 hover:shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+                <CardContent className="p-0">
+                  <div className="text-3xl md:text-4xl font-bold text-amber-500 mb-2">{t.dedication}</div>
+                  <div className="text-sm text-gray-400 leading-relaxed">{t.dedicationLabel}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.8 }}>
+              <Card className="bg-gray-900/50 border-gray-800 text-center p-6 transition-all duration-300 hover:border-amber-500 hover:shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+                <CardContent className="p-0">
+                  <div className="text-3xl md:text-4xl font-bold text-amber-500 mb-2">{t.support}</div>
+                  <div className="text-sm text-gray-400 leading-relaxed">{t.supportLabel}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-gradient-to-b from-gray-900 to-black">
+      <section id="about" className="py-20 bg-gray-900/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-yellow-500">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent">
             {t.aboutTitle}
           </h2>
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="flex justify-center">
-              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-yellow-500">
+              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-amber-500">
                 <img
-                  src="/আমার-ছবি.png"
+                  src="/profile.png"
                   alt="Joysriram Sarkar"
                   className="w-full h-full object-cover"
                 />
@@ -322,11 +351,11 @@ export default function Portfolio() {
                 {t.aboutText3}
               </p>
               <div className="flex flex-wrap gap-2 pt-4">
-                <Badge variant="secondary" className="bg-gray-800 text-yellow-500 border-gray-700">C</Badge>
-                <Badge variant="secondary" className="bg-gray-800 text-yellow-500 border-gray-700">Python</Badge>
-                <Badge variant="secondary" className="bg-gray-800 text-yellow-500 border-gray-700">WordPress</Badge>
-                <Badge variant="secondary" className="bg-gray-800 text-yellow-500 border-gray-700">Ethical Hacking</Badge>
-                <Badge variant="secondary" className="bg-gray-800 text-yellow-500 border-gray-700">AI</Badge>
+                <Badge variant="secondary" className="bg-gray-800 text-amber-500 border-gray-700">C</Badge>
+                <Badge variant="secondary" className="bg-gray-800 text-amber-500 border-gray-700">Python</Badge>
+                <Badge variant="secondary" className="bg-gray-800 text-amber-500 border-gray-700">WordPress</Badge>
+                <Badge variant="secondary" className="bg-gray-800 text-amber-500 border-gray-700">Ethical Hacking</Badge>
+                <Badge variant="secondary" className="bg-gray-800 text-amber-500 border-gray-700">AI</Badge>
               </div>
             </div>
           </div>
@@ -334,54 +363,75 @@ export default function Portfolio() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 bg-gradient-to-b from-black to-gray-900">
+      <section id="services" className="py-20 bg-black">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-yellow-500">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent">
             {t.servicesTitle}
           </h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="bg-gray-900/50 border-gray-800 hover:border-yellow-500 transition-all group">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                  <Code className="w-8 h-8 text-black" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4 text-yellow-500">{t.webDev}</h3>
-                <p className="text-gray-400">{t.webDevDesc}</p>
-              </CardContent>
-            </Card>
+          <motion.div 
+            className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={{
+              hidden: {},
+              show: { transition: { staggerChildren: 0.2 } }
+            }}
+          >
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
+              <Card className="bg-gray-900/50 border-gray-800 hover:border-amber-500 transition-all group h-full">
+                <CardContent className="p-0">
+                  <div className="p-8 text-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                      <Code className="w-8 h-8 text-black" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-4 text-amber-500 leading-relaxed">{t.webDev}</h3>
+                    <p className="text-gray-400 leading-relaxed">{t.webDevDesc}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
             
-            <Card className="bg-gray-900/50 border-gray-800 hover:border-yellow-500 transition-all group">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                  <PenTool className="w-8 h-8 text-black" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4 text-yellow-500">{t.contentWriting}</h3>
-                <p className="text-gray-400">{t.contentWritingDesc}</p>
-              </CardContent>
-            </Card>
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
+              <Card className="bg-gray-900/50 border-gray-800 hover:border-amber-500 transition-all group h-full">
+                <CardContent className="p-0">
+                  <div className="p-8 text-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                      <PenTool className="w-8 h-8 text-black" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-4 text-amber-500 leading-relaxed">{t.contentWriting}</h3>
+                    <p className="text-gray-400 leading-relaxed">{t.contentWritingDesc}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
             
-            <Card className="bg-gray-900/50 border-gray-800 hover:border-yellow-500 transition-all group">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                  <Palette className="w-8 h-8 text-black" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4 text-yellow-500">{t.design}</h3>
-                <p className="text-gray-400">{t.designDesc}</p>
-              </CardContent>
-            </Card>
-          </div>
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
+              <Card className="bg-gray-900/50 border-gray-800 hover:border-amber-500 transition-all group h-full">
+                <CardContent className="p-0">
+                  <div className="p-8 text-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                      <Palette className="w-8 h-8 text-black" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-4 text-amber-500 leading-relaxed">{t.design}</h3>
+                    <p className="text-gray-400 leading-relaxed">{t.designDesc}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-yellow-500 to-yellow-600">
+      <section className="py-20 bg-gradient-to-r from-amber-500 to-yellow-600">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
             {t.ctaText}
           </h2>
           <a href="https://wa.me/917584864899" target="_blank" rel="noopener noreferrer">
             <Button
-              className="bg-black text-yellow-500 hover:bg-gray-900 font-semibold px-8 py-6 text-lg transition-all transform hover:scale-105"
+              className="bg-black text-amber-500 hover:bg-gray-900 font-semibold px-8 py-6 text-lg transition-all transform hover:scale-105 hover:shadow-[0_0_20px_rgba(0,0,0,0.5)]"
             >
               {t.getInTouch}
             </Button>
@@ -395,13 +445,13 @@ export default function Portfolio() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             {/* Brand */}
             <div>
-              <h3 className="text-2xl font-bold text-yellow-500 mb-4">Joysriram</h3>
-              <p className="text-gray-400">{t.domain}</p>
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent mb-4">{t.brandName}</h3>
+              <p className="text-gray-400 leading-relaxed">{t.domain}</p>
             </div>
             
             {/* Contact Info */}
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-yellow-500">{t.contact}</h4>
+              <h4 className="text-lg font-semibold mb-4 text-amber-500 leading-relaxed">{t.contact}</h4>
               <div className="space-y-2 text-gray-400">
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
@@ -413,22 +463,22 @@ export default function Portfolio() {
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4" />
-                  <span className="text-sm">{t.address}</span>
+                  <span className="text-sm leading-relaxed">{t.address}</span>
                 </div>
               </div>
             </div>
             
             {/* Quick Links */}
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-yellow-500">Quick Links</h4>
+              <h4 className="text-lg font-semibold mb-4 text-amber-500">Quick Links</h4>
               <div className="space-y-2">
-                <button onClick={() => scrollToSection('home')} className="block text-gray-400 hover:text-yellow-500 transition-colors">
+                <button onClick={() => scrollToSection('home')} className="block text-gray-400 hover:text-amber-500 transition-colors leading-relaxed">
                   {t.home}
                 </button>
-                <button onClick={() => scrollToSection('about')} className="block text-gray-400 hover:text-yellow-500 transition-colors">
+                <button onClick={() => scrollToSection('about')} className="block text-gray-400 hover:text-amber-500 transition-colors leading-relaxed">
                   {t.about}
                 </button>
-                <button onClick={() => scrollToSection('services')} className="block text-gray-400 hover:text-yellow-500 transition-colors">
+                <button onClick={() => scrollToSection('services')} className="block text-gray-400 hover:text-amber-500 transition-colors leading-relaxed">
                   {t.services}
                 </button>
               </div>
@@ -436,25 +486,25 @@ export default function Portfolio() {
             
             {/* Social Links */}
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-yellow-500">Follow Me</h4>
+              <h4 className="text-lg font-semibold mb-4 text-amber-500">Follow Me</h4>
               <div className="flex space-x-4" suppressHydrationWarning>
                 <a href="https://github.com/joysriramsarkar" target="_blank" rel="noopener noreferrer">
-                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-amber-500">
                     <Github className="w-5 h-5" />
                   </Button>
                 </a>
                 <a href="https://www.linkedin.com/in/জয়শ্রীরাম-সরকার-abb282110/" target="_blank" rel="noopener noreferrer">
-                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-amber-500">
                     <Linkedin className="w-5 h-5" />
                   </Button>
                 </a>
                 <a href="https://x.com/SarkarJoysriram" target="_blank" rel="noopener noreferrer">
-                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-amber-500">
                     <Twitter className="w-5 h-5" />
                   </Button>
                 </a>
                 <a href="https://www.facebook.com/joysriramsarkar0" target="_blank" rel="noopener noreferrer">
-                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-amber-500">
                     <Facebook className="w-5 h-5" />
                   </Button>
                 </a>
@@ -465,7 +515,7 @@ export default function Portfolio() {
           <Separator className="bg-gray-800 mb-8" />
           
           <div className="text-center text-gray-400">
-            <p>{t.copyright}</p>
+            <p className="leading-relaxed">{t.copyright}</p>
           </div>
         </div>
       </footer>

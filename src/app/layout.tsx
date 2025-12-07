@@ -72,6 +72,8 @@ export default function RootLayout({
       </head>
       <body
         className={`${hindSiliguri.variable} ${poppins.variable} antialiased bg-background text-foreground font-sans`}
+        data-gramm="false"
+        data-gramm_editor="false"
       >
         {children}
         <Toaster />
