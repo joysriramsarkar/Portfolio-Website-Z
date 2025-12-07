@@ -25,7 +25,7 @@ const translations = {
     // Stats Section
     experience: '৬+ মাস',
     experienceLabel: 'অভিজ্ঞতা/শেখা CoderDive-এ',
-    projects: '১০+',
+    projects: '২০+',
     projectsLabel: 'প্রজেক্ট',
     dedication: '১০০%',
     dedicationLabel: 'নিষ্ঠা',
@@ -62,7 +62,7 @@ const translations = {
     location: 'ঠিকানা',
     
     // Examples
-    examples: 'উদাহরণ: Amazon Clone, Music App'
+    examples: 'উদাহরণ: বাংলা গানের ডেটাবেস, ই-কমার্স ওয়েবসাইট'
   },
   en: {
     // Navigation
@@ -379,12 +379,13 @@ export default function Portfolio() {
           <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
             {t.ctaText}
           </h2>
-          <Button
-            onClick={() => scrollToSection('contact')}
-            className="bg-black text-yellow-500 hover:bg-gray-900 font-semibold px-8 py-6 text-lg transition-all transform hover:scale-105"
-          >
-            {t.getInTouch}
-          </Button>
+          <a href="https://wa.me/917584864899" target="_blank" rel="noopener noreferrer">
+            <Button
+              className="bg-black text-yellow-500 hover:bg-gray-900 font-semibold px-8 py-6 text-lg transition-all transform hover:scale-105"
+            >
+              {t.getInTouch}
+            </Button>
+          </a>
         </div>
       </section>
 
@@ -404,11 +405,11 @@ export default function Portfolio() {
               <div className="space-y-2 text-gray-400">
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  <span>contact@joysriram.com</span>
+                  <span>joysriram.sarkar.56@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  <span>+91 XXXXX XXXXX</span>
+                  <span>+91 7584864899</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4" />
@@ -436,19 +437,27 @@ export default function Portfolio() {
             {/* Social Links */}
             <div>
               <h4 className="text-lg font-semibold mb-4 text-yellow-500">Follow Me</h4>
-              <div className="flex space-x-4">
-                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
-                  <Github className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
-                  <Linkedin className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
-                  <Twitter className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
-                  <Facebook className="w-5 h-5" />
-                </Button>
+              <div className="flex space-x-4" suppressHydrationWarning>
+                <a href="https://github.com/joysriramsarkar" target="_blank" rel="noopener noreferrer">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
+                    <Github className="w-5 h-5" />
+                  </Button>
+                </a>
+                <a href="https://www.linkedin.com/in/জয়শ্রীরাম-সরকার-abb282110/" target="_blank" rel="noopener noreferrer">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
+                    <Linkedin className="w-5 h-5" />
+                  </Button>
+                </a>
+                <a href="https://x.com/SarkarJoysriram" target="_blank" rel="noopener noreferrer">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
+                    <Twitter className="w-5 h-5" />
+                  </Button>
+                </a>
+                <a href="https://www.facebook.com/joysriramsarkar0" target="_blank" rel="noopener noreferrer">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
+                    <Facebook className="w-5 h-5" />
+                  </Button>
+                </a>
               </div>
             </div>
           </div>

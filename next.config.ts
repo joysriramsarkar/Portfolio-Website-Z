@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
+  productionBrowserSourceMaps: false,
+  serverExternalPackages: ['sharp'],
 };
 
 export default nextConfig;
