@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Menu, X, Globe, Code, PenTool, Palette, Mail, Phone, MapPin, ExternalLink, Github, Linkedin, Twitter, Facebook } from 'lucide-react';
+import { Menu, X, Globe, Code, PenTool, Palette, Mail, Phone, MapPin, ExternalLink, Github, Linkedin, Twitter, Facebook, BookOpen } from 'lucide-react';
 
 // Translation data
 const translations = {
@@ -456,6 +456,11 @@ export default function Portfolio() {
                 <a href="https://www.facebook.com/joysriramsarkar0" target="_blank" rel="noopener noreferrer">
                   <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
                     <Facebook className="w-5 h-5" />
+                  </Button>
+                </a>
+                <a href="https://meta.wikimedia.org/wiki/Special:GlobalContributions/জয়শ্রীরাম_সরকার" target="_blank" rel="noopener noreferrer" title="Wikimedia Contributions">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-yellow-500">
+                    <BookOpen className="w-5 h-5" />
                   </Button>
                 </a>
               </div>
