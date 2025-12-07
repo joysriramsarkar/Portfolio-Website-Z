@@ -305,7 +305,7 @@ export default function Portfolio() {
             <div className="flex justify-center">
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-yellow-500">
                 <img
-                  src="/profile.jpg"
+                  src="/আমার-ছবি.png"
                   alt="Joysriram Sarkar"
                   className="w-full h-full object-cover"
                 />

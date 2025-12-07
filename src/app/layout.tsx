@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   keywords: ["Joysriram", "Web Development", "AI Content", "Digital Solutions", "Siliguri", "CoderDive", "WordPress", "Python", "Freelancing"],
   authors: [{ name: "Joysriram Sarkar" }],
   icons: {
-    icon: "/logo.svg",
+    icon: "/logo.png",
   },
   openGraph: {
     title: "Joysriram Sarkar - Digital Solutions & Web Development",
