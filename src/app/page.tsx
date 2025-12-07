@@ -35,8 +35,8 @@ const translations = {
     // About Section
     aboutTitle: 'আমার সম্পর্কে',
     aboutText1: 'আমি বর্তমানে CoderDive-এ ফ্রিল্যান্সিং ও ওয়েব ডেভেলপমেন্ট কোর্স করছি।',
-    aboutText2: 'আমার C, Python, WordPress, এবং এথিক্যাল হ্যাকিং-এ দক্ষতা রয়েছে।',
-    aboutText3: 'আমি এছাড়াও একটি AI Niche-এ কাজ করছি।',
+    aboutText2: 'আমার C, Python, WordPress, এবং এথিক্যাল হ্যাকিং-এ দক্ষতা রয়েছে। আমি মূলত কবিতা ও দিনলিপি লিখি এবং বাংলা উইকিপিডিয়ায় অবদান রাখি।',
+    aboutText3: 'আমার আগ্রহের মূল বিষয় হচ্ছে চলচ্চিত্র, উপন্যাস ও টেকনোলজি। আমি পশ্চিমবঙ্গের চলচ্চিত্র, সঙ্গীত, ও বিভিন্ন বিচিত্র বিষয়ে বাংলা নিবন্ধ তৈরিতে অবদান রেখেছি। এছাড়াও আমি একটি AI Niche-এ কাজ করছি।',
     
     // Services Section
     servicesTitle: 'আমার সার্ভিস',
@@ -90,8 +90,8 @@ const translations = {
     // About Section
     aboutTitle: 'About Me',
     aboutText1: 'I am currently pursuing a Freelancing & Web Development course at CoderDive.',
-    aboutText2: 'I have skills in C, Python, WordPress, and Ethical Hacking.',
-    aboutText3: 'I am also working on an AI Niche.',
+    aboutText2: 'I have skills in C, Python, WordPress, and Ethical Hacking. I primarily write poems and diaries and contribute to Bengali Wikipedia.',
+    aboutText3: 'My main interests are films, novels, and technology. I have contributed to creating Bengali articles on films, music, and various miscellaneous topics of West Bengal. I am also working on an AI Niche.',
     
     // Services Section
     servicesTitle: 'My Services',
