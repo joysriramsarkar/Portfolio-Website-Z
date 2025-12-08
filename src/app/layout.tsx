@@ -65,13 +65,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
+    <html lang="bn" suppressHydrationWarning className={`${hindSiliguri.variable} ${poppins.variable}`}>
       <body
-        className={`${hindSiliguri.variable} ${poppins.variable} antialiased bg-background text-foreground font-sans`}
+        className="antialiased bg-background text-foreground font-sans"
         data-gramm="false"
         data-gramm_editor="false"
       >
