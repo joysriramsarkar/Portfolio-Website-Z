@@ -1,16 +1,14 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  output: "standalone",
-  // This is the new recommended way to silence the multiple lockfiles warning
-  outputFileTracingRoot: process.cwd(),
-  /* config options here */
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  reactStrictMode: false,
-  productionBrowserSourceMaps: false,
-  serverExternalPackages: ['sharp'],
+const nextConfig = {
+    // Your existing configurations might be here
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+            },
+        ],
+    },
 };
 
 export default nextConfig;
+

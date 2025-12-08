@@ -1,6 +1,7 @@
 'use client';
 
 import GithubProjects from './GithubProjects';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -15,190 +16,9 @@ import {
   CheckCircle, BookOpen, User, Send
 } from 'lucide-react';
 import WikimediaContributions from './WikimediaContributions';
+import { translations } from './translations';
 
-// Translation data
-const translations = {
-  bn: {
-    // Navigation
-    home: 'হোম',
-    about: 'আমার সম্পর্কে',
-    services: 'সার্ভিস',
-    portfolio: 'পোর্টফোলিও',
-    blog: 'ব্লগ',
-    brandName: 'জয়শ্রীরাম সরকার',
-    contact: 'যোগাযোগ',
-    
-    // Hero Section
-    headline: 'সৃজনশীলতা এবং প্রযুক্তির সংমিশ্রণ',
-    subheadline: 'আমি জয়শ্রীরাম সরকার। একজন ওয়েব ডেভেলপার, এআই কন্টেন্ট রাইটার এবং প্রযুক্তি প্রেমী। আমি আপনার ডিজিটাল স্বপ্নকে বাস্তবে রূপ দিতে প্রস্তুত।',
-    hireMe: 'আমাকে হায়ার করুন',
-    viewProjects: 'প্রজেক্ট দেখুন',
-    
-    // Stats Section
-    experience: '৬+ মাস',
-    experienceLabel: 'অভিজ্ঞতা CoderDive-এ',
-    projects: '২০+',
-    projectsLabel: 'সফল প্রজেক্ট',
-    dedication: '১০০%',
-    dedicationLabel: 'কাজের প্রতি নিষ্ঠা',
-    support: '২৪/৭',
-    supportLabel: 'সাপোর্ট',
-    
-    // About Section
-    aboutTitle: 'আমার সম্পর্কে',
-    aboutSubtitle: 'আমার যাত্রা ও অভিজ্ঞতা',
-    aboutText1: 'পারিবারিক দোকান সামলানো থেকে শুরু করে প্রযুক্তির জগতে প্রবেশ—আমার এই যাত্রা সহজ ছিল না, কিন্তু ছিল রোমাঞ্চকর।',
-    aboutText2: 'সঙ্গীতের প্রতি ভালোবাসা থেকে আমি তৈরি করেছি "বাংলা গান ডেটাবেস"। বর্তমানে CoderDive-এ ওয়েব ডেভেলপমেন্ট, পাইথন এবং এথিক্যাল হ্যাকিং শিখছি।',
-    aboutText3: 'আমি কঠোর পরিশ্রমে বিশ্বাসী এবং যেকোনো চ্যালেঞ্জ নিতে প্রস্তুত। কবিতা লেখা থেকে শুরু করে জটিল কোড লেখা—সবকিছুতেই আমি সৃজনশীলতা খুঁজি।',
-
-    // Projects Section
-    projectsTitle: 'আমার প্রজেক্ট',
-    project1Title: 'বাংলা গান ডেটাবেস',
-    project1Desc: 'বাংলা গানের একটি বিশাল ভান্ডার। অ্যান্ড্রয়েড এবং ওয়েব প্ল্যাটফর্মের জন্য তৈরি।',
-    project1Tech: 'Android, Web',
-    project2Title: 'অ্যামাজন ক্লোন',
-    project2Desc: 'অ্যামাজনের ফ্রন্টএন্ড ক্লোন যা আমার UI/UX দক্ষতা প্রদর্শন করে।',
-    project2Tech: 'HTML, CSS',
-    project3Title: 'এআই ই-বুক',
-    project3Desc: 'কৃত্রিম বুদ্ধিমত্তা নিয়ে লেখা একটি পূর্ণাঙ্গ বই।',
-    project3Tech: 'AI Content',
-    
-    // Services Section
-    servicesTitle: 'আমার সার্ভিস',
-    service1Title: 'এআই কন্টেন্ট রাইটিং',
-    service1Desc: 'ব্লগ পোস্ট, ই-বুক এবং আর্টিকেল যা এআই টুলস ব্যবহার করে এসইও অপ্টিমাইজড করে লেখা হয়।',
-    service2Title: 'ওয়ার্ডপ্রেস ডিজাইন',
-    service2Desc: 'রেসপন্সিভ এবং দ্রুত গতির ওয়েবসাইট ডিজাইন।',
-    service3Title: 'ওয়েব ডেভেলপমেন্ট',
-    service3Desc: 'কাস্টম HTML/CSS/Python কোডিং সলিউশন।',
-    
-    // Blog Section
-    blogTitle: 'ব্লগ',
-    blogPost1: 'কিভাবে এআই ফ্রিল্যান্স রাইটিং ইন্ডাস্ট্রি বদলে দিচ্ছে',
-    blogPost2: 'নতুনদের জন্য ওয়েব ডেভেলপমেন্ট গাইড',
-    blogPost3: 'পাইথন দিয়ে অটোমেশন: একটি সহজ গাইড',
-    readMore: 'আরও পড়ুন',
-
-    // E-book Section
-    ebookTitle: 'আমার এআই ই-বুক',
-    ebookDesc: 'এআই শেখার জন্য একটি সহজ গাইড। আজই ডাউনলোড করুন।',
-    download: 'ডাউনলোড করুন',
-
-    // CTA Section
-    ctaText: 'আপনার প্রজেক্ট নিয়ে কথা বলতে চান?',
-    getInTouch: 'যোগাযোগ করুন',
-    
-    // Contact Form
-    namePlaceholder: 'আপনার নাম',
-    emailPlaceholder: 'আপনার ইমেল',
-    messagePlaceholder: 'আপনার বার্তা',
-    sendMessage: 'বার্তা পাঠান',
-
-    // Footer
-    address: 'মাস্টারপাড়া, শিবমন্দির, শিলিগুড়ি, পশ্চিমবঙ্গ',
-    copyright: '© ২০২৫ জয়শ্রীরাম সরকার। সর্বস্বত্ব সংরক্ষিত।',
-    
-    // Wikimedia
-    wikimediaContributions: 'উইকিমিডিয়া অবদান',
-    viewContributions: 'অবদান দেখুন',
-    loadingContributions: 'অবদান লোড হচ্ছে...',
-
-    // Github
-    githubProjects: "গিটহাব প্রজেক্ট",
-    viewOnGithub: "গিটহাবে দেখুন",
-  },
-  en: {
-    // Navigation
-    home: 'Home',
-    about: 'About',
-    services: 'Services',
-    portfolio: 'Portfolio',
-    blog: 'Blog',
-    brandName: 'Joysriram Sarkar',
-    contact: 'Contact',
-    
-    // Hero Section
-    headline: 'Blending Creativity with Technology',
-    subheadline: 'I am Joysriram Sarkar. A Web Developer, AI Content Writer, and Tech Enthusiast. Let\'s build something amazing together.',
-    hireMe: 'Hire Me',
-    viewProjects: 'View Projects',
-    
-    // Stats Section
-    experience: '6+ Months',
-    experienceLabel: 'Experience at CoderDive',
-    projects: '20+',
-    projectsLabel: 'Projects Completed',
-    dedication: '100%',
-    dedicationLabel: 'Commitment',
-    support: '24/7',
-    supportLabel: 'Support',
-    
-    // About Section
-    aboutTitle: 'About Me',
-    aboutSubtitle: 'My Journey & Story',
-    aboutText1: 'From managing a family shop to diving into the world of technology, my journey is a testament to resilience and hard work.',
-    aboutText2: 'With a background in music (creating the Bangla Gan Database), I transitioned into tech, mastering Python, Web Development, and Ethical Hacking at CoderDive.',
-    aboutText3: 'I blend my creative background with technical skills to deliver unique digital solutions. I am versatile, hardworking, and always eager to learn.',
-
-    // Projects Section
-    projectsTitle: 'Featured Projects',
-    project1Title: 'Bangla Gan Database',
-    project1Desc: 'A comprehensive database for Bengali songs involving Android & Web technologies.',
-    project1Tech: 'Android, Web',
-    project2Title: 'Amazon Clone',
-    project2Desc: 'A pixel-perfect frontend clone of Amazon demonstrating advanced UI skills.',
-    project2Tech: 'HTML, CSS',
-    project3Title: 'AI E-book',
-    project3Desc: 'An insightful book on Artificial Intelligence written as part of a content assignment.',
-    project3Tech: 'AI Content',
-    
-    // Services Section
-    servicesTitle: 'My Services',
-    service1Title: 'AI Content Writing',
-    service1Desc: 'SEO-optimized blog posts, e-books, and articles using advanced AI tools.',
-    service2Title: 'WordPress Design',
-    service2Desc: 'Creating responsive, fast, and visually appealing WordPress websites.',
-    service3Title: 'Web Development',
-    service3Desc: 'Custom coding solutions using HTML, CSS, and Python.',
-    
-    // Blog Section
-    blogTitle: 'Latest From Blog',
-    blogPost1: 'How AI is Changing the Freelance Writing Industry',
-    blogPost2: 'Web Development for Beginners: Where to Start',
-    blogPost3: 'Automating Tasks with Python: A Simple Guide',
-    readMore: 'Read More',
-
-    // E-book Section
-    ebookTitle: 'Unlock the Power of AI',
-    ebookDesc: 'Get my exclusive E-book on Artificial Intelligence. Learn the basics and advanced concepts.',
-    download: 'Download Now',
-
-    // CTA Section
-    ctaText: 'Ready to start your next project?',
-    getInTouch: 'Get In Touch',
-
-    // Contact Form
-    namePlaceholder: 'Your Name',
-    emailPlaceholder: 'Your Email',
-    messagePlaceholder: 'Your Message',
-    sendMessage: 'Send Message',
-    
-    // Footer
-    address: 'Mastarpara, Shivmandir, Siliguri, West Bengal',
-    copyright: '© 2025 Joysriram Sarkar. All rights reserved.',
-
-    // Wikimedia
-    wikimediaContributions: 'Wikimedia Contributions',
-    viewContributions: 'View Contributions',
-    loadingContributions: 'Loading contributions...',
-
-    // Github
-    githubProjects: "GitHub Projects",
-    viewOnGithub: "View on GitHub",
-  }
-};
-
-export default function PortfolioClient({ children }: { children: React.ReactNode }) {
+export default function PortfolioClient() {
   const [language, setLanguage] = useState<'bn' | 'en'>('bn');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -230,10 +50,11 @@ export default function PortfolioClient({ children }: { children: React.ReactNod
           {/* Logo */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => scrollToSection('home')}>
             <div className="w-10 h-10 relative rounded-full overflow-hidden border-2 border-cyan-500">
-              <img
+              <Image
                 src="/joysriram-logo.png"
                 alt="Joysriram Logo"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             </div>
             <div className="text-xl md:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
@@ -382,10 +203,12 @@ export default function PortfolioClient({ children }: { children: React.ReactNod
             >
               <div className="relative w-72 h-72 md:w-96 md:h-96">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 blur-2xl opacity-20 animate-pulse"></div>
-                <img
+                <Image
                   src="/profile.png"
                   alt="Joysriram Sarkar"
-                  className="relative w-full h-full object-cover rounded-2xl border-2 border-slate-800 shadow-2xl rotate-3 hover:rotate-0 transition-all duration-500"
+                  fill
+                  className="relative object-cover rounded-2xl border-2 border-slate-800 shadow-2xl rotate-3 hover:rotate-0 transition-all duration-500"
+                  priority
                 />
               </div>
             </motion.div>
@@ -463,9 +286,9 @@ export default function PortfolioClient({ children }: { children: React.ReactNod
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: t.project1Title, desc: t.project1Desc, tech: t.project1Tech },
-              { title: t.project2Title, desc: t.project2Desc, tech: t.project2Tech },
-              { title: t.project3Title, desc: t.project3Desc, tech: t.project3Tech }
+              { title: t.project1Title, desc: t.project1Desc, tech: t.project1Tech, image: '/projects/banglagan.png' },
+              { title: t.project2Title, desc: t.project2Desc, tech: t.project2Tech, image: '/projects/banglatyping.png' },
+              { title: t.project3Title, desc: t.project3Desc, tech: t.project3Tech, image: '/projects/snakegame.png' }
             ].map((project, index) => (
               <motion.div
                 key={index}
@@ -477,8 +300,15 @@ export default function PortfolioClient({ children }: { children: React.ReactNod
               >
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-0 group-hover:opacity-30 transition duration-500"></div>
                 <Card className="relative bg-slate-900 border-slate-800 h-full">
-                  <div className="h-48 bg-slate-800 rounded-t-xl flex items-center justify-center">
-                    <Code className="w-12 h-12 text-slate-600" />
+                  <div className="relative h-48 bg-slate-800 rounded-t-xl overflow-hidden">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    {/* Fallback Icon */}
+                    {/* <Code className="w-12 h-12 text-slate-600" /> */}
                   </div>
                   <CardContent className="p-6">
                     <Badge className="mb-4 bg-cyan-900/30 text-cyan-400 hover:bg-cyan-900/40 border-0">{project.tech}</Badge>
@@ -636,6 +466,16 @@ export default function PortfolioClient({ children }: { children: React.ReactNod
           <p className="text-slate-500 text-sm">{t.copyright}</p>
         </div>
       </footer>
+
+      {/* Mobile Floating CTA */}
+      <div className="md:hidden fixed bottom-6 right-6 z-50">
+        <Button
+          onClick={() => scrollToSection('contact')}
+          className="rounded-full w-14 h-14 bg-cyan-600 shadow-lg shadow-cyan-500/40 flex items-center justify-center"
+        >
+          <Mail className="w-6 h-6 text-white" />
+        </Button>
+      </div>
     </div>
   );
 }
