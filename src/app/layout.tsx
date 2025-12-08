@@ -1,61 +1,39 @@
 import type { Metadata } from "next";
-import { Hind_Siliguri, Poppins } from "next/font/google";
+import { Inter, Hind_Siliguri } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
 
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const hindSiliguri = Hind_Siliguri({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["bengali"],
   variable: "--font-hind-siliguri",
-  subsets: ["bengali", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Joysriram Sarkar - Digital Solutions & Web Development",
-  description:
-    "Professional web developer and AI content creator from Siliguri. Specializing in digital solutions, web development, and AI-powered content creation.",
-  keywords: [
-    "Joysriram",
-    "Web Development",
-    "AI Content",
-    "Digital Solutions",
-    "Siliguri",
-    "CoderDive",
-    "WordPress",
-    "Python",
-    "Freelancing",
-    "জয়শ্রীরাম",
-    "ওয়েব ডেভেলপমেন্ট",
-    "এআই কন্টেন্ট",
-    "ডিজিটাল সলিউশন",
-    "শিলিগুড়ি",
-    "কোডারডাইভ",
-    "ওয়ার্ডপ্রেস",
-    "পাইথন",
-    "ফ্রিল্যান্সিং",
-  ],
+  title: "Joysriram Sarkar - Web Developer & AI Content Expert",
+  description: "Joysriram Sarkar is a Freelance Web Developer and AI Content Writer specializing in Python, WordPress, and Ethical Hacking.",
+  keywords: ["Joysriram Sarkar", "Web Developer", "AI Content Writer", "Freelancer", "Portfolio", "Python", "WordPress", "Ethical Hacking", "India"],
   authors: [{ name: "Joysriram Sarkar" }],
-  icons: {
-    icon: "/logo.png",
-  },
   openGraph: {
-    title: "Joysriram Sarkar - Digital Solutions & Web Development",
-    description:
-      "Passionate Web Developer and AI Content Creator from Siliguri. ডিজিটাল সলিউশন ও ওয়েব ডেভেলপমেন্ট।",
+    title: "Joysriram Sarkar - Web Developer & AI Content Expert",
+    description: "Personal portfolio of Joysriram Sarkar. Blending creativity with technology.",
     url: "https://joysriram.com",
-    siteName: "Joysriram Sarkar",
+    siteName: "Joysriram Sarkar Portfolio",
+    images: [
+      {
+        url: "/profile.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Joysriram Sarkar - Web Developer",
-    description:
-      "Digital Solutions & Web Development | AI Content Creator | ডিজিটাল সলিউশন ও ওয়েব ডেভেলপমেন্ট",
+    title: "Joysriram Sarkar - Web Developer & AI Content Expert",
+    description: "Personal portfolio of Joysriram Sarkar.",
+    images: ["/profile.png"],
   },
 };
 
@@ -65,14 +43,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn" suppressHydrationWarning className={`${hindSiliguri.variable} ${poppins.variable}`}>
-      <body
-        className="antialiased bg-background text-foreground font-sans"
-        data-gramm="false"
-        data-gramm_editor="false"
-      >
+    <html lang="en" className="scroll-smooth">
+      <body className={`${inter.variable} ${hindSiliguri.variable} font-sans antialiased`}>
         {children}
-        <Toaster />
       </body>
     </html>
   );
