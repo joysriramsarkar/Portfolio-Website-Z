@@ -12,15 +12,23 @@ interface Contribution {
   editcount: number;
 }
 
+interface TranslationContent {
+  wikimediaContributions: string;
+  wikiNames: { [key: string]: string };
+  edits: string;
+  viewContributions: string;
+  viewAllContributions: string;
+}
+
 interface WikimediaContributionsProps {
   language: "bn" | "en";
-  translations: any;
-};
+  translations: { [key: string]: TranslationContent };
+}
+
+const WIKIMEDIA_USERNAME = "জয়শ্রীরাম সরকার";
 
 async function getWikimediaContributions(): Promise<Contribution[]> {
-  // আপনার উইকিমিডিয়া ব্যবহারকারীর নাম
-  const username = "জয়শ্রীরাম সরকার";
-  const encodedUsername = encodeURIComponent(username);
+  const encodedUsername = encodeURIComponent(WIKIMEDIA_USERNAME);
   const apiUrl = `https://meta.wikimedia.org/w/api.php?action=query&meta=globaluserinfo&guiuser=${encodedUsername}&guiprop=merged&format=json&origin=*`;
 
   try {
@@ -58,7 +66,7 @@ export default function WikimediaContributions({ language, translations }: Wikim
       setLoading(false);
     }
     fetchData();
-  }, []);
+  }, [language]); // ভাষা পরিবর্তন হলে ডেটা রি-ফেচ করার জন্য language যোগ করা হলো
 
   if (loading) {
     return (
@@ -93,14 +101,14 @@ export default function WikimediaContributions({ language, translations }: Wikim
           {topContributions.map((contrib) => (
             <div key={contrib.wiki} className="bg-card p-6 rounded-lg shadow-md border border-border">
               <h3 className="text-xl font-semibold font-hind-siliguri mb-2">
-                {t.wikiNames[contrib.wiki] || contrib.wiki}
+                {(t.wikiNames && t.wikiNames[contrib.wiki]) || contrib.wiki}
               </h3>
               <p className="text-4xl font-bold text-primary mb-4">
                 {contrib.editcount.toLocaleString("bn-BD")}
               </p>
               <p className="text-muted-foreground mb-4">{t.edits}</p>
               <a
-                href={`${contrib.url}/wiki/Special:Contributions/${encodeURIComponent("জয়শ্রীরাম সরকার")}`}
+                href={`${contrib.url}/wiki/Special:Contributions/${encodeURIComponent(WIKIMEDIA_USERNAME)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:underline inline-flex items-center"
