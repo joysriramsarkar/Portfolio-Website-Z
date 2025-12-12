@@ -17,12 +17,20 @@ import {
 } from 'lucide-react';
 import WikimediaContributions from './WikimediaContributions';
 import { translations } from './translations';
+import emailjs from '@emailjs/browser';
+import { useToast } from '@/hooks/use-toast';
 
 export default function PortfolioClient() {
   const [language, setLanguage] = useState<'bn' | 'en'>('bn');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const t = translations[language];
+
+  const { toast } = useToast();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,7 +65,7 @@ export default function PortfolioClient() {
                 className="object-cover"
               />
             </div>
-            <div className="text-xl md:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
+            <div className="text-xl md:text-2xl font-bold bg-[linear-gradient(to_right,theme(colors.cyan.400),theme(colors.blue.600))] bg-clip-text text-transparent">
               {t.brandName}
             </div>
           </div>
@@ -126,7 +134,7 @@ export default function PortfolioClient() {
 
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center relative bg-slate-950 pt-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950 to-slate-950"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-blue-900/20 via-slate-950 to-slate-950"></div>
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div
@@ -139,7 +147,7 @@ export default function PortfolioClient() {
               Web Developer & AI Content Expert
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-[linear-gradient(to_right,theme(colors.cyan.400),theme(colors.blue.500),theme(colors.purple.600))] bg-clip-text text-transparent">
                 {t.headline}
               </span>
             </h1>
@@ -149,7 +157,7 @@ export default function PortfolioClient() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={() => scrollToSection('contact')}
-                className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-semibold px-8 py-6 text-lg rounded-full shadow-lg shadow-cyan-900/20"
+                className="bg-[linear-gradient(to_right,theme(colors.cyan.600),theme(colors.blue.600))] hover:bg-[linear-gradient(to_right,theme(colors.cyan.700),theme(colors.blue.700))] text-white font-semibold px-8 py-6 text-lg rounded-full shadow-lg shadow-cyan-900/20"
               >
                 {t.hireMe}
               </Button>
@@ -202,7 +210,7 @@ export default function PortfolioClient() {
               className="w-full md:w-1/2 flex justify-center"
             >
               <div className="relative w-72 h-72 md:w-96 md:h-96">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 blur-2xl opacity-20 animate-pulse"></div>
+                <div className="absolute inset-0 rounded-full bg-[linear-gradient(to_top_right,theme(colors.cyan.500),theme(colors.blue.600))] blur-2xl opacity-20 animate-pulse"></div>
                 <Image
                   src="/profile.png"
                   alt="Joysriram Sarkar"
@@ -298,7 +306,7 @@ export default function PortfolioClient() {
                 transition={{ delay: index * 0.2 }}
                 className="group relative"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-0 group-hover:opacity-30 transition duration-500"></div>
+                <div className="absolute -inset-0.5 bg-[linear-gradient(to_right,theme(colors.cyan.500),theme(colors.blue.600))] rounded-2xl blur opacity-0 group-hover:opacity-30 transition duration-500"></div>
                 <Card className="relative bg-slate-900 border-slate-800 h-full">
                   <div className="relative h-48 bg-slate-800 rounded-t-xl overflow-hidden">
                     <Image
@@ -331,7 +339,7 @@ export default function PortfolioClient() {
       <GithubProjects language={language} translations={translations} />
 
       {/* E-book Section */}
-      <section className="py-20 bg-gradient-to-br from-indigo-900 to-slate-900 relative overflow-hidden">
+      {/* <section className="py-20 bg-[linear-gradient(to_bottom_right,theme(colors.indigo.900),theme(colors.slate.900))] relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
         <div className="container mx-auto px-4 relative z-10 text-center">
           <BookOpen className="w-16 h-16 text-cyan-400 mx-auto mb-6" />
@@ -342,10 +350,10 @@ export default function PortfolioClient() {
             {t.download}
           </Button>
         </div>
-      </section>
+      </section> */}
 
       {/* Blog Section */}
-      <section id="blog" className="py-24 bg-slate-950">
+      {/* <section id="blog" className="py-24 bg-slate-950">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-cyan-500 font-semibold mb-2">{t.blog}</h2>
@@ -366,7 +374,7 @@ export default function PortfolioClient() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Wikimedia Contributions */}
       <WikimediaContributions language={language} translations={translations} />
@@ -443,18 +451,45 @@ export default function PortfolioClient() {
             </div>
 
             <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={async (e) => {
+                e.preventDefault();
+                if (loading) return;
+                setLoading(true);
+                try {
+                  const templateParams = {
+                    from_name: name || 'Anonymous',
+                    email: email || 'no-reply@example.com',
+                    message: message || ''
+                  };
+
+                  await emailjs.send('service_h2tb4te', 'template_mnfyq1f', templateParams, 'eFWK_fhLWe34_6NAh');
+                  toast({
+                    title: language === 'bn' ? 'বার্তা পাঠানো হয়েছে' : 'Message sent',
+                    description: language === 'bn' ? 'আপনার বার্তা সফলভাবে পাঠানো হয়েছে।' : 'Your message was sent successfully.'
+                  });
+                  setName('');
+                  setEmail('');
+                  setMessage('');
+                } catch (err) {
+                  toast({
+                    title: language === 'bn' ? 'পাঠানো হয়নি' : 'Send failed',
+                    description: language === 'bn' ? 'বার্তা পাঠাতে সমস্যা হয়েছে। পরে আবার চেষ্টা করুন।' : 'There was an error sending your message. Please try again later.'
+                  });
+                } finally {
+                  setLoading(false);
+                }
+              }}>
                 <div>
-                  <Input placeholder={t.namePlaceholder} className="bg-slate-950 border-slate-800 focus:border-cyan-500" />
+                  <Input value={name} onChange={(e) => setName(e.target.value)} placeholder={t.namePlaceholder} className="bg-slate-950 border-slate-800 focus:border-cyan-500" />
                 </div>
                 <div>
-                  <Input type="email" placeholder={t.emailPlaceholder} className="bg-slate-950 border-slate-800 focus:border-cyan-500" />
+                  <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder={t.emailPlaceholder} className="bg-slate-950 border-slate-800 focus:border-cyan-500" />
                 </div>
                 <div>
-                  <Textarea placeholder={t.messagePlaceholder} className="bg-slate-950 border-slate-800 focus:border-cyan-500 min-h-[150px]" />
+                  <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder={t.messagePlaceholder} className="bg-slate-950 border-slate-800 focus:border-cyan-500 min-h-[150px]" />
                 </div>
-                <Button className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white py-6 text-lg">
-                  {t.sendMessage} <Send className="w-4 h-4 ml-2" />
+                <Button disabled={loading} className="w-full bg-[linear-gradient(to_right,theme(colors.cyan.600),theme(colors.blue.600))] hover:bg-[linear-gradient(to_right,theme(colors.cyan.700),theme(colors.blue.700))] text-white py-6 text-lg">
+                  {loading ? (language === 'bn' ? 'পাঠানো হচ্ছে...' : 'Sending...') : (<>{t.sendMessage} <Send className="w-4 h-4 ml-2" /></>)}
                 </Button>
               </form>
             </div>
