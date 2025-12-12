@@ -101,7 +101,7 @@ export default async function AllContributionsPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent font-hind-siliguri">
+          <h1 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent font-hind-siliguri">
             আমার সমস্ত উইকিমিডিয়া অবদান
           </h1>
         </div>

@@ -67,7 +67,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn" suppressHydrationWarning className={`${hindSiliguri.variable} ${poppins.variable}`}>
-      <body className="antialiased bg-background text-foreground font-sans">
+      <body suppressHydrationWarning className="antialiased bg-background text-foreground font-sans">
         {children}
         <Toaster />
       </body>

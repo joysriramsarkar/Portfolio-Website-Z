@@ -229,7 +229,7 @@ export default function PortfolioClient() {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                {['Python', 'Web Dev', 'Ethical Hacking', 'Content Writing', 'WordPress', 'React'].map((skill) => (
+                {['Python', 'Web Dev', 'Content Writing', 'WordPress', 'React'].map((skill) => (
                   <Badge key={skill} variant="secondary" className="bg-slate-900 text-cyan-400 border border-slate-800 px-4 py-2">
                     {skill}
                   </Badge>
@@ -286,9 +286,9 @@ export default function PortfolioClient() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: t.project1Title, desc: t.project1Desc, tech: t.project1Tech, image: '/projects/banglagan.png' },
-              { title: t.project2Title, desc: t.project2Desc, tech: t.project2Tech, image: '/projects/banglatyping.png' },
-              { title: t.project3Title, desc: t.project3Desc, tech: t.project3Tech, image: '/projects/snakegame.png' }
+              { title: t.project1Title, desc: t.project1Desc, tech: t.project1Tech, image: '/projects/banglagan.png', link: t.project1Link },
+              { title: t.project2Title, desc: t.project2Desc, tech: t.project2Tech, image: '/projects/banglatyping.png', link: t.project2Link },
+              { title: t.project3Title, desc: t.project3Desc, tech: t.project3Tech, image: '/projects/snakegame.png', link: t.project3Link }
             ].map((project, index) => (
               <motion.div
                 key={index}
@@ -314,9 +314,11 @@ export default function PortfolioClient() {
                     <Badge className="mb-4 bg-cyan-900/30 text-cyan-400 hover:bg-cyan-900/40 border-0">{project.tech}</Badge>
                     <h4 className="text-xl font-bold text-white mb-2">{project.title}</h4>
                     <p className="text-slate-400 mb-6">{project.desc}</p>
-                    <Button variant="link" className="text-cyan-500 hover:text-cyan-400 p-0 h-auto font-semibold group-hover:translate-x-1 transition-transform">
-                      {t.viewProjects} <ExternalLink className="w-4 h-4 ml-1" />
-                    </Button>
+                    <a href={project.link} target="_blank" rel="noopener noreferrer">
+                      <Button variant="link" className="text-cyan-500 hover:text-cyan-400 p-0 h-auto font-semibold group-hover:translate-x-1 transition-transform">
+                        {t.viewProjects} <ExternalLink className="w-4 h-4 ml-1" />
+                      </Button>
+                    </a>
                   </CardContent>
                 </Card>
               </motion.div>
