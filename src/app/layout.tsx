@@ -41,9 +41,6 @@ export const metadata: Metadata = {
     "ফ্রিল্যান্সিং",
   ],
   authors: [{ name: "Joysriram Sarkar" }],
-  icons: {
-    icon: "/logo.png",
-  },
   openGraph: {
     title: "Joysriram Sarkar - Digital Solutions & Web Development",
     description:
