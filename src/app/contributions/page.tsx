@@ -16,6 +16,9 @@ async function getWikimediaContributions(): Promise<Contribution[]> {
   try {
     const response = await fetch(apiUrl, {
       next: { revalidate: 3600 }, // ১ ঘণ্টা পর পর ডেটা রিফ্রেশ হবে
+      headers: {
+        "User-Agent": `Portfolio-Website-Z/1.0 (https://meta.wikimedia.org/wiki/User:${encodedUsername})`,
+      },
     });
 
     if (!response.ok) {
