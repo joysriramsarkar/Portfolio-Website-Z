@@ -1,6 +1,7 @@
 'use client';
 
 import GithubProjects from './GithubProjects';
+import DesignShowcase from './DesignShowcase';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -337,6 +338,9 @@ export default function PortfolioClient() {
 
       {/* Github Projects */}
       <GithubProjects language={language} translations={translations} />
+
+      {/* Design Showcase */}
+      <DesignShowcase language={language} limit={6} />
 
       {/* E-book Section */}
       {/* <section className="py-20 bg-[linear-gradient(to_bottom_right,theme(colors.indigo.900),theme(colors.slate.900))] relative overflow-hidden">

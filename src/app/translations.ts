@@ -94,6 +94,12 @@ export const translations = {
       // Github
       githubProjects: "গিটহাব প্রজেক্ট",
       viewOnGithub: "গিটহাবে দেখুন",
+
+      // Designs
+      designs: "ডিজাইন",
+      designsTitle: "আমার সৃজনশীল ডিজাইন",
+      viewAllDesigns: "সব ডিজাইন দেখুন",
+      backToHome: "হোমে ফিরে যান",
     },
     en: {
       // Navigation
@@ -189,6 +195,12 @@ export const translations = {
       // Github
       githubProjects: "GitHub Projects",
       viewOnGithub: "View on GitHub",
+
+      // Designs
+      designs: "Designs",
+      designsTitle: "My Creative Designs",
+      viewAllDesigns: "View All Designs",
+      backToHome: "Back to Home",
     }
   };
   
