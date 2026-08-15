@@ -17,6 +17,7 @@ import {
   CheckCircle, BookOpen, User, Send
 } from 'lucide-react';
 import WikimediaContributions from './WikimediaContributions';
+import Link from 'next/link';
 import { translations } from './translations';
 import emailjs from '@emailjs/browser';
 import { useToast } from '@/hooks/use-toast';
@@ -295,9 +296,9 @@ export default function PortfolioClient() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: t.project1Title, desc: t.project1Desc, tech: t.project1Tech, image: '/projects/banglagan.png', link: t.project1Link },
-              { title: t.project2Title, desc: t.project2Desc, tech: t.project2Tech, image: '/projects/banglatyping.png', link: t.project2Link },
-              { title: t.project3Title, desc: t.project3Desc, tech: t.project3Tech, image: '/projects/snakegame.png', link: t.project3Link }
+              { id: 'project1', title: t.project1Title, desc: t.project1Desc, tech: t.project1Tech, image: '/projects/banglagan.png', link: t.project1Link },
+              { id: 'project2', title: t.project2Title, desc: t.project2Desc, tech: t.project2Tech, image: '/projects/banglatyping.png', link: t.project2Link },
+              { id: 'project3', title: t.project3Title, desc: t.project3Desc, tech: t.project3Tech, image: '/projects/snakegame.png', link: t.project3Link }
             ].map((project, index) => (
               <motion.div
                 key={index}
@@ -308,7 +309,7 @@ export default function PortfolioClient() {
                 className="group relative"
               >
                 <div className="absolute -inset-0.5 bg-[linear-gradient(to_right,theme(colors.cyan.500),theme(colors.blue.600))] rounded-2xl blur opacity-0 group-hover:opacity-30 transition duration-500"></div>
-                <Card className="relative bg-slate-900 border-slate-800 h-full">
+                <Card className="relative bg-slate-900 border-slate-800 h-full flex flex-col">
                   <div className="relative h-48 bg-slate-800 rounded-t-xl overflow-hidden">
                     <Image
                       src={project.image}
@@ -319,15 +320,19 @@ export default function PortfolioClient() {
                     {/* Fallback Icon */}
                     {/* <Code className="w-12 h-12 text-slate-600" /> */}
                   </div>
-                  <CardContent className="p-6">
-                    <Badge className="mb-4 bg-cyan-900/30 text-cyan-400 hover:bg-cyan-900/40 border-0">{project.tech}</Badge>
-                    <h4 className="text-xl font-bold text-white mb-2">{project.title}</h4>
-                    <p className="text-slate-400 mb-6">{project.desc}</p>
-                    <a href={project.link} target="_blank" rel="noopener noreferrer">
-                      <Button variant="link" className="text-cyan-500 hover:text-cyan-400 p-0 h-auto font-semibold group-hover:translate-x-1 transition-transform">
-                        {t.viewProjects} <ExternalLink className="w-4 h-4 ml-1" />
-                      </Button>
-                    </a>
+                  <CardContent className="p-6 flex-grow flex flex-col">
+                    <div className="flex-grow">
+                      <Badge className="mb-4 bg-cyan-900/30 text-cyan-400 hover:bg-cyan-900/40 border-0">{project.tech}</Badge>
+                      <h4 className="text-xl font-bold text-white mb-2">{project.title}</h4>
+                      <p className="text-slate-400 mb-6">{project.desc}</p>
+                    </div>
+                    <div className="mt-auto flex flex-col gap-2">
+                      <Link href={`/projects/${project.id}?lang=${language}`}>
+                        <Button variant="link" className="text-cyan-500 hover:text-cyan-400 p-0 h-auto font-semibold group-hover:translate-x-1 transition-transform">
+                          {language === 'bn' ? 'কেস স্টাডি দেখুন' : 'View Case Study'} <ExternalLink className="w-4 h-4 ml-1" />
+                        </Button>
+                      </Link>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
