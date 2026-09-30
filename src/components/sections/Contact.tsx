@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -115,7 +115,7 @@ export default function Contact({ language, t }: ContactProps) {
             <p className="text-slate-400 mb-8 text-lg leading-relaxed">
               {isBn
                 ? 'কোনো প্রজেক্ট মাথায় আছে? আমাকে জানান। যত দ্রুত সম্ভব উত্তর দেব।'
-                : 'Have a project in mind? I'd love to hear from you. Send me a message and I'll get back to you as soon as possible.'}
+                : 'Have a project in mind? I\u2019d love to hear from you. Send me a message and I\u2019ll get back to you as soon as possible.'}
             </p>
 
             <div className="space-y-6">
