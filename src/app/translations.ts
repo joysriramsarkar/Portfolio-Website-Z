@@ -1,4 +1,4 @@
-// Translation data
+﻿// Translation data
 export const translations = {
     bn: {
       // Navigation
@@ -182,7 +182,7 @@ export const translations = {
       
       // Footer
       address: 'Mastarpara, Shivmandir, Siliguri, West Bengal',
-      copyright: '© 2025 Joysriram Sarkar. All rights reserved.',
+      copyright: '© 2026 Joysriram Sarkar. All rights reserved.',
   
       // Wikimedia
       wikimediaContributions: 'Wikimedia Contributions',

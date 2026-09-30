@@ -44,8 +44,8 @@ To run this project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/joysriramsarkar/portfolio.git
-   cd portfolio
+   git clone https://github.com/joysriramsarkar/my-portfolio.git
+   cd my-portfolio
    ```
 
 2. Install dependencies:
@@ -86,4 +86,4 @@ Feel free to reach out to me for collaboration or inquiries:
 - GitHub: [joysriramsarkar](https://github.com/joysriramsarkar)
 
 ---
-© 2025 Joysriram Sarkar. All rights reserved.
+© 2026 Joysriram Sarkar. All rights reserved.
