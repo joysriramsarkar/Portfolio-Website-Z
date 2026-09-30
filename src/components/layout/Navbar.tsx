@@ -1,168 +1,127 @@
 'use client';
 
-import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Globe, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
-interface NavbarProps {
+interface SiteHeaderProps {
   language: 'bn' | 'en';
   onToggleLanguage: () => void;
-  t: {
-    home: string;
-    about: string;
-    portfolio: string;
-    services: string;
-    contact: string;
-    brandName: string;
-  };
 }
 
-const navItems = [
-  { key: 'home', id: 'home' },
-  { key: 'about', id: 'about' },
-  { key: 'portfolio', id: 'projects' },
-  { key: 'services', id: 'services' },
-  // Blog Navbar থেকে সরানো হয়েছে — Blog section এখনও তৈরি নেই
+const navLinks = [
+  { href: '/#work',       labelEn: 'Work',        labelBn: 'কাজ' },
+  { href: '/projects',    labelEn: 'Projects',     labelBn: 'প্রজেক্ট' },
+  { href: '/lab',         labelEn: 'Lab',          labelBn: 'ল্যাব' },
+  { href: '/open-source', labelEn: 'Open Source',  labelBn: 'ওপেন সোর্স' },
+  { href: '/about',       labelEn: 'About',        labelBn: 'আমার সম্পর্কে' },
+  { href: '/writing',     labelEn: 'Writing',      labelBn: 'লেখা' },
 ] as const;
 
-export default function Navbar({ language, onToggleLanguage, t }: NavbarProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+export default function SiteHeader({ language, onToggleLanguage }: SiteHeaderProps) {
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isBn = language === 'bn';
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth' });
-    setIsMenuOpen(false);
-  };
-
-  const labels: Record<string, string> = {
-    home: t.home,
-    about: t.about,
-    portfolio: t.portfolio,
-    services: t.services,
-  };
+  // Close menu on route change
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-slate-950/90 backdrop-blur-md py-4 border-b border-slate-800'
-          : 'bg-transparent py-6'
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-[var(--bg)]/95 backdrop-blur-sm border-b border-[var(--border)]'
+          : 'bg-transparent'
       }`}
-      aria-label="Primary navigation"
+      aria-label="Site header"
     >
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        {/* Logo */}
-        <button
-          onClick={() => scrollToSection('home')}
-          className="flex items-center space-x-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg"
-          aria-label="Go to top"
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">
+        {/* Logo / Wordmark */}
+        <Link
+          href="/"
+          className="font-semibold text-[var(--text)] hover:text-[var(--accent-bengali)] transition-colors text-sm tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-bengali)] rounded"
+          aria-label="Home"
         >
-          <div className="w-10 h-10 relative rounded-full overflow-hidden border-2 border-cyan-500">
-            <Image
-              src="/joysriram-logo.png"
-              alt="Joysriram Logo"
-              fill
-              className="object-cover"
-              sizes="40px"
-            />
-          </div>
-          <span className="text-xl md:text-2xl font-bold bg-[linear-gradient(to_right,theme(colors.cyan.400),theme(colors.blue.600))] bg-clip-text text-transparent">
-            {t.brandName}
-          </span>
-        </button>
+          {isBn ? 'জয়শ্রীরাম সরকার' : 'Joysriram Sarkar'}
+        </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-8">
-          {navItems.map(({ key, id }) => (
-            <button
-              key={key}
-              onClick={() => scrollToSection(id)}
-              className="hover:text-cyan-400 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded"
-            >
-              {labels[key]}
-            </button>
-          ))}
-          <Button
-            onClick={() => scrollToSection('contact')}
-            className="bg-cyan-600 hover:bg-cyan-700 text-white"
-          >
-            {t.contact}
-          </Button>
-          <Button
-            onClick={onToggleLanguage}
-            variant="outline"
-            size="sm"
-            className="border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white transition-all ml-2"
-            aria-label={`Switch to ${language === 'bn' ? 'English' : 'Bengali'}`}
-          >
-            <Globe className="w-4 h-4 mr-2" aria-hidden="true" />
-            {language === 'bn' ? 'EN' : 'BN'}
-          </Button>
-        </div>
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-1" aria-label="Primary navigation">
+          {navLinks.map(({ href, labelEn, labelBn }) => {
+            const cleanHref = href.startsWith('/#') ? '/' : href;
+            const isActive = pathname === href || (cleanHref !== '/' && Boolean(pathname?.startsWith(cleanHref)));
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`px-3 py-1.5 rounded text-sm transition-colors ${
+                  isActive
+                    ? 'text-[var(--accent-bengali)] font-medium'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text)]'
+                } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-bengali)]`}
+              >
+                {isBn ? labelBn : labelEn}
+              </Link>
+            );
+          })}
+        </nav>
 
-        {/* Mobile Controls */}
-        <div className="md:hidden flex items-center space-x-4">
-          <Button
+        {/* Controls */}
+        <div className="flex items-center gap-2">
+          {/* Language toggle */}
+          <button
             onClick={onToggleLanguage}
-            variant="outline"
-            size="sm"
-            className="border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white"
-            aria-label={`Switch to ${language === 'bn' ? 'English' : 'Bengali'}`}
+            aria-label={isBn ? 'Switch to English' : 'বাংলায় পড়ুন'}
+            className="section-label px-2 py-1 rounded border border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--accent-bengali)] hover:text-[var(--accent-bengali)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-bengali)]"
           >
-            <Globe className="w-4 h-4" aria-hidden="true" />
-          </Button>
-          <Button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            variant="ghost"
-            size="sm"
-            className="text-white hover:text-cyan-400"
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isMenuOpen}
+            {isBn ? 'EN' : 'BN'}
+          </button>
+
+          {/* Mobile menu toggle */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            className="md:hidden p-1.5 rounded text-[var(--text-muted)] hover:text-[var(--text)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-bengali)]"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </Button>
+            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
-        {isMenuOpen && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-slate-900/95 backdrop-blur-md border-t border-slate-800 absolute w-full left-0 top-full"
+            className="md:hidden overflow-hidden border-b border-[var(--border)] bg-[var(--bg)]"
           >
-            <div className="container mx-auto px-4 py-6 flex flex-col space-y-4">
-              {navItems.map(({ key, id }) => (
-                <button
-                  key={key}
-                  onClick={() => scrollToSection(id)}
-                  className="text-left hover:text-cyan-400 transition-colors py-2"
+            <nav className="max-w-6xl mx-auto px-5 py-4 flex flex-col gap-1" aria-label="Mobile navigation">
+              {navLinks.map(({ href, labelEn, labelBn }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="py-2.5 text-sm text-[var(--text-muted)] hover:text-[var(--accent-bengali)] transition-colors border-b border-[var(--border)] last:border-0"
                 >
-                  {labels[key]}
-                </button>
+                  {isBn ? labelBn : labelEn}
+                </Link>
               ))}
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="text-left hover:text-cyan-400 transition-colors py-2"
-              >
-                {t.contact}
-              </button>
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 }

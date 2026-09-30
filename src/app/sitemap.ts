@@ -1,40 +1,28 @@
 import { MetadataRoute } from 'next';
-
-// Static project slugs — নতুন project যোগ হলে এখানে যোগ করুন
-const PROJECT_SLUGS = ['project1', 'project2', 'project3'];
+import { projects } from '@/data/projects';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://joysriram.com';
   const now = new Date();
 
-  const projectEntries: MetadataRoute.Sitemap = PROJECT_SLUGS.map((slug) => ({
-    url: `${baseUrl}/projects/${slug}`,
+  const projectEntries: MetadataRoute.Sitemap = projects.map((p) => ({
+    url: `${baseUrl}/projects/${p.slug}`,
     lastModified: now,
     changeFrequency: 'monthly',
-    priority: 0.8,
+    priority: p.featured ? 0.9 : 0.7,
   }));
 
-  return [
-    {
-      url: baseUrl,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/designs`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contributions`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    ...projectEntries,
-    // Blog: এখনও তৈরি নেই, তাই sitemap-এ নেই
-    // /blog — ভবিষ্যতে যোগ হবে
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: baseUrl, lastModified: now, changeFrequency: 'weekly', priority: 1.0 },
+    { url: `${baseUrl}/projects`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/lab`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/now`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/writing`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/open-source`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/designs`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/contributions`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
   ];
+
+  return [...staticRoutes, ...projectEntries];
 }

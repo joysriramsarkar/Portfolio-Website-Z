@@ -7,53 +7,56 @@ const hindSiliguri = Hind_Siliguri({
   variable: "--font-hind-siliguri",
   subsets: ["bengali", "latin"],
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://joysriram.com"),
-  title: "Joysriram Sarkar - Digital Solutions & Web Development",
+  title: {
+    default: "Joysriram Sarkar — AI-assisted Builder & Bengali Technologist",
+    template: "%s | Joysriram Sarkar",
+  },
   description:
-    "Professional web developer and AI content creator from Siliguri. Specializing in digital solutions, web development, and AI-powered content creation.",
+    "Personal engineering lab and digital portfolio of Joysriram Sarkar — AI-assisted builder, Bengali-first technologist, and open-source experimenter from Siliguri.",
   keywords: [
-    "Joysriram",
-    "Web Development",
-    "AI Content",
-    "Digital Solutions",
+    "Joysriram Sarkar",
+    "জয়শ্রীরাম সরকার",
+    "AI-assisted builder",
+    "Bengali Technologist",
+    "Bangla Typing",
+    "BanglaGan",
+    "POS",
+    "Chalao",
+    "Nilang",
+    "Onuron",
+    "Open Source",
+    "Wikimedia",
+    "বাংলা কম্পিউটিং",
     "Siliguri",
-    "CoderDive",
-    "WordPress",
-    "Python",
-    "Freelancing",
-    "জয়শ্রীরাম",
-    "ওয়েব ডেভেলপমেন্ট",
-    "এআই কন্টেন্ট",
-    "ডিজিটাল সলিউশন",
-    "শিলিগুড়ি",
-    "কোডারডাইভ",
-    "ওয়ার্ডপ্রেস",
-    "পাইথন",
-    "ফ্রিল্যান্সিং",
   ],
-  authors: [{ name: "Joysriram Sarkar" }],
+  authors: [{ name: "Joysriram Sarkar", url: "https://joysriram.com" }],
+  creator: "Joysriram Sarkar",
   openGraph: {
-    title: "Joysriram Sarkar - Digital Solutions & Web Development",
+    title: "Joysriram Sarkar — AI-assisted Builder & Bengali Technologist",
     description:
-      "Passionate Web Developer and AI Content Creator from Siliguri. ডিজিটাল সলিউশন ও ওয়েব ডেভেলপমেন্ট।",
+      "Digital workshop of Joysriram Sarkar — exploring Bengali computing, open-source software, and AI-assisted engineering.",
     url: "https://joysriram.com",
     siteName: "Joysriram Sarkar",
     type: "website",
+    locale: "bn_BD",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Joysriram Sarkar - Web Developer",
+    title: "Joysriram Sarkar — AI-assisted Builder & Bengali Technologist",
     description:
-      "Digital Solutions & Web Development | AI Content Creator | ডিজিটাল সলিউশন ও ওয়েব ডেভেলপমেন্ট",
+      "Digital workshop of Joysriram Sarkar — exploring Bengali computing, open-source software, and AI-assisted engineering.",
   },
 };
 
@@ -64,7 +67,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn" suppressHydrationWarning className={`${hindSiliguri.variable} ${poppins.variable}`}>
-      <body suppressHydrationWarning className="antialiased bg-background text-foreground font-sans">
+      <body suppressHydrationWarning className="antialiased bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent-bengali)] selection:text-white">
         {children}
         <Toaster />
       </body>

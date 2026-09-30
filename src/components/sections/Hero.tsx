@@ -1,94 +1,163 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 interface HeroProps {
   language: 'bn' | 'en';
-  t: {
-    headline: string;
-    subheadline: string;
-    hireMe: string;
-    viewProjects: string;
-  };
-  onScrollTo: (id: string) => void;
 }
 
-export default function Hero({ t, onScrollTo }: HeroProps) {
+const nowBuilding = ['BanglaGan', 'Bangla Typing', 'POS', 'Chalao'];
+const nowLearning = ['CSS / Responsive Design', 'Python', 'AI Mathematics'];
+const nowExploring = ['Nilang', 'Alap', 'Onuron Ecosystem'];
+
+export default function Hero({ language }: HeroProps) {
+  const isBn = language === 'bn';
+
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative bg-slate-950 pt-20"
+      className="min-h-screen flex flex-col justify-center pt-20 pb-12 max-w-6xl mx-auto px-5 sm:px-8"
+      aria-label="Introduction"
     >
-      {/* Background radial gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950 to-slate-950 pointer-events-none" />
+      {/* Top label */}
+      <motion.p
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="section-label mb-8 text-[var(--accent-bengali)]"
+      >
+        {isBn ? 'জয়শ্রীরাম সরকার' : 'Joysriram Sarkar'}
+      </motion.p>
 
-      {/* Subtle grid pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,theme(colors.slate.800/0.1)_1px,transparent_1px),linear-gradient(to_bottom,theme(colors.slate.800/0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
-
-      <div className="container mx-auto px-4 relative z-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1, duration: 0.4 }}
-            className="inline-block px-4 py-1.5 mb-6 rounded-full bg-cyan-900/30 border border-cyan-500/30 text-cyan-400 text-sm font-medium"
+      {/* Main headline — 2 column on large screens */}
+      <div className="grid lg:grid-cols-[1fr_auto] gap-10 lg:gap-16 items-start">
+        <div>
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--text)] leading-[1.1] tracking-tight mb-6"
           >
-            বাংলা-কেন্দ্রিক Software &amp; Digital Builder
+            {isBn ? (
+              <>
+                AI দিয়ে ডিজিটাল টুল{' '}
+                <span className="text-[var(--accent-bengali)]">তৈরি করি</span>
+              </>
+            ) : (
+              <>
+                I build digital tools{' '}
+                <span className="text-[var(--accent-bengali)]">with AI,</span>
+                <br />code and ideas
+              </>
+            )}
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="prose-editorial max-w-xl mb-10"
+          >
+            {isBn
+              ? 'বাংলা ভাষা, software, open source ও প্রযুক্তি নিয়ে আমি বিভিন্ন ধরনের digital products তৈরি করছি — AI-সহায়ক development workflow ব্যবহার করে, ক্রমাগত engineering fundamentals গভীর করতে করতে।'
+              : 'I work at the intersection of Bengali language, software, and open source — building digital products using AI-assisted workflows while continuously deepening engineering fundamentals.'}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.25 }}
+            className="flex flex-wrap gap-3"
+          >
+            <Link
+              href="#work"
+              className="inline-flex items-center gap-2 bg-[var(--accent-bengali)] hover:bg-[var(--accent-bengali-light)] text-white text-sm font-medium px-5 py-2.5 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-bengali)]"
+            >
+              {isBn ? 'কাজ দেখুন' : 'Explore my work'}
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+            <a
+              href="https://github.com/joysriramsarkar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--border-strong)] text-sm font-medium px-5 py-2.5 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-bengali)]"
+            >
+              GitHub
+            </a>
           </motion.div>
+        </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="bg-[linear-gradient(to_right,theme(colors.cyan.400),theme(colors.blue.500),theme(colors.purple.600))] bg-clip-text text-transparent">
-              {t.headline}
-            </span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto">
-            {t.subheadline}
+        {/* NOW strip — currently building/learning/exploring */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.35 }}
+          className="hidden lg:block min-w-[200px]"
+        >
+          <p className="section-label text-[var(--text-faint)] mb-4">
+            {isBn ? 'এখন' : 'NOW'}
           </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Button
-              onClick={() => onScrollTo('projects')}
-              className="bg-[linear-gradient(to_right,theme(colors.cyan.600),theme(colors.blue.600))] hover:opacity-90 text-white font-semibold px-8 py-6 text-lg rounded-full shadow-lg shadow-cyan-900/20 transition-opacity"
-            >
-              {t.viewProjects}
-            </Button>
-            <Button
-              onClick={() => onScrollTo('contact')}
-              variant="outline"
-              className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white font-semibold px-8 py-6 text-lg rounded-full"
-            >
-              {t.hireMe}
-            </Button>
-          </motion.div>
+          <div className="space-y-5">
+            <div>
+              <p className="section-label text-[var(--accent-bengali)] mb-2">
+                {isBn ? 'তৈরি করছি' : 'BUILDING'}
+              </p>
+              <ul className="space-y-1">
+                {nowBuilding.map((item) => (
+                  <li key={item} className="text-xs text-[var(--text-muted)]">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="section-label text-[var(--accent-tech)] mb-2">
+                {isBn ? 'শিখছি' : 'LEARNING'}
+              </p>
+              <ul className="space-y-1">
+                {nowLearning.map((item) => (
+                  <li key={item} className="text-xs text-[var(--text-muted)]">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="section-label text-[var(--text-faint)] mb-2">
+                {isBn ? 'পরীক্ষা করছি' : 'EXPLORING'}
+              </p>
+              <ul className="space-y-1">
+                {nowExploring.map((item) => (
+                  <li key={item} className="text-xs text-[var(--text-muted)]">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </motion.div>
       </div>
 
-      {/* Scroll hint */}
+      {/* Identity tags */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        transition={{ duration: 0.4, delay: 0.45 }}
+        className="mt-16 pt-8 border-t border-[var(--border)] flex flex-wrap gap-x-6 gap-y-1"
       >
-        <div className="w-6 h-10 rounded-full border-2 border-slate-700 flex items-start justify-center p-1">
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-1.5 h-1.5 rounded-full bg-cyan-500"
-          />
-        </div>
+        {[
+          isBn ? 'AI-সহায়ক builder' : 'AI-assisted builder',
+          isBn ? 'বাংলা-প্রথম প্রযুক্তি' : 'Bengali-first technologist',
+          isBn ? 'ওপেন-সোর্স experimenter' : 'Open-source experimenter',
+          isBn ? 'স্বাধীন software maker' : 'Independent software maker',
+        ].map((tag, i) => (
+          <span key={i} className="section-label text-[var(--text-faint)]">
+            {tag}
+          </span>
+        ))}
       </motion.div>
     </section>
   );

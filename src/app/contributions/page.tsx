@@ -1,7 +1,7 @@
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, Globe2 } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
+import SiteFooter from "@/components/layout/Footer";
 
 type Contribution = {
   wiki: string;
@@ -16,7 +16,7 @@ async function getWikimediaContributions(): Promise<Contribution[]> {
 
   try {
     const response = await fetch(apiUrl, {
-      next: { revalidate: 3600 }, // ১ ঘণ্টা পর পর ডেটা রিফ্রেশ হবে
+      next: { revalidate: 3600 },
       headers: {
         "User-Agent": `Portfolio-Website-Z/1.0 (https://meta.wikimedia.org/wiki/User:${encodedUsername})`,
       },
@@ -27,7 +27,7 @@ async function getWikimediaContributions(): Promise<Contribution[]> {
     }
 
     const data = await response.json();
-    const contributions: Contribution[] = data.query.globaluserinfo.merged;
+    const contributions: Contribution[] = data?.query?.globaluserinfo?.merged || [];
 
     return contributions
       .filter((contrib) => contrib.editcount > 0)
@@ -43,68 +43,34 @@ const WIKI_NAMES: { [key: string]: string } = {
   arwiki: "আরবি উইকিপিডিয়া",
   aswiki: "অসমীয়া উইকিপিডিয়া",
   bdwikimedia: "উইকিমিডিয়া বাংলাদেশ",
-  "be-x-oldwiki": "বেলারুশীয় উইকিপিডিয়া (তারাস্কিয়েভিৎসা)",
-  betawikiversity: "বেটা উইকিভার্সিটি",
+  "be-x-oldwiki": "বেলারুশীয় উইকিপিডিয়া",
   bnwiki: "বাংলা উইকিপিডিয়া",
   bnwikibooks: "বাংলা উইকিবই",
   bnwikiquote: "বাংলা উইকিউক্তি",
   bnwikisource: "বাংলা উইকিসংকলন",
   bnwikivoyage: "বাংলা উইকিভ্রমণ",
   bnwiktionary: "বাংলা উইকিঅভিধান",
-  bpywiki: "বিষ্ণুপ্রিয়া মণিপুরী উইকিপিডিয়া",
   commonswiki: "উইকিমিডিয়া কমন্স",
   datawiki: "উইকিউপাত্ত",
   wikidatawiki: "উইকিউপাত্ত",
   dewiki: "জার্মান উইকিপিডিয়া",
   enwiki: "ইংরেজি উইকিপিডিয়া",
-  enwikibooks: "ইংরেজি উইকিবই",
-  enwikinews: "ইংরেজি উইকিসংবাদ",
-  enwikiquote: "ইংরেজি উইকিউক্তি",
-  enwikisource: "ইংরেজি উইকিসংকলন",
-  enwikiversity: "ইংরেজি উইকিভার্সিটি",
-  enwikivoyage: "ইংরেজি উইকিভ্রমণ",
-  foundationwiki: "উইকিমিডিয়া ফাউন্ডেশন",
   hiwiki: "হিন্দি উইকিপিডিয়া",
-  hiwikiquote: "হিন্দি উইকিউক্তি",
-  hiwikisource: "হিন্দি উইকিসংকলন",
-  idwiki: "ইন্দোনেশীয় উইকিপিডিয়া",
-  incubatorwiki: "উইকিমিডিয়া ইনকিউবেটর",
-  itwiki: "ইতালীয় উইকিপিডিয়া",
-  jawiki: "জাপানি উইকিপিডিয়া",
-  knwiki: "কন্নড় উইকিপিডিয়া",
-  kowiki: "কোরীয় উইকিপিডিয়া",
-  lmowiki: "লম্বার্ড উইকিপিডিয়া",
   mediawikiwiki: "মিডিয়াউইকি",
   metawiki: "মেটা-উইকি",
-  mlwiki: "মালয়ালম উইকিপিডিয়া",
-  mrwiki: "মারাঠি উইকিপিডিয়া",
-  newiki: "নেপালি উইকিপিডিয়া",
-  ruwikisource: "রুশ উইকিসংকলন",
-  sawiki: "সংস্কৃত উইকিপিডিয়া",
-  sawikisource: "সংস্কৃত উইকিসংকলন",
-  siwiki: "সিংহলি উইকিপিডিয়া",
-  specieswiki: "উইকিস্পিসিজ",
-  tawiki: "তামিল উইকিপিডিয়া",
-  tawikisource: "তামিল উইকিসংকলন",
-  tewiki: "তেলুগু উইকিপিডিয়া",
-  thwiki: "থাই উইকিপিডিয়া",
-  wikimaniawiki: "উইকিম্যানিয়া",
-  zhwiki: "চীনা উইকিপিডিয়া",
-  zhwiktionary: "চীনা উইকিঅভিধান",
 };
 
 function ContributionsSkeleton() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          className="bg-gray-900/50 border border-gray-800 p-6 rounded-lg shadow-md animate-pulse"
+          className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded animate-pulse"
         >
-          <div className="h-6 bg-gray-800 rounded w-3/4 mb-4" />
-          <div className="h-10 bg-gray-800 rounded w-1/2 mb-4" />
-          <div className="h-4 bg-gray-800 rounded w-1/4 mb-4" />
-          <div className="h-4 bg-gray-800 rounded w-1/3" />
+          <div className="h-4 bg-[var(--surface-2)] rounded w-3/4 mb-3" />
+          <div className="h-8 bg-[var(--surface-2)] rounded w-1/2 mb-3" />
+          <div className="h-3 bg-[var(--surface-2)] rounded w-1/4" />
         </div>
       ))}
     </div>
@@ -116,62 +82,117 @@ async function ContributionsList() {
 
   if (contributions.length === 0) {
     return (
-      <p className="text-center text-gray-300">
-        অবদানের তথ্য পাওয়া যায়নি।
-      </p>
+      <div className="text-center py-16 border border-dashed border-[var(--border)] rounded">
+        <p className="text-sm text-[var(--text-muted)]">
+          উইকিমিডিয়া অবদানের তথ্য সাময়িকভাবে পাওয়া যায়নি। সরাসরি মেটা-উইকিতে প্রোফাইল দেখতে পারেন।
+        </p>
+      </div>
     );
   }
 
+  const totalEdits = contributions.reduce((acc, c) => acc + c.editcount, 0);
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {contributions.map((contrib) => (
-        <div
-          key={contrib.wiki}
-          className="bg-gray-900/50 border border-gray-800 p-6 rounded-lg shadow-md hover:border-amber-500 transition-colors"
-        >
-          <h3 className="text-xl font-semibold font-hind-siliguri mb-2 text-amber-500">
-            {WIKI_NAMES[contrib.wiki] || contrib.wiki}
-          </h3>
-          <p className="text-4xl font-bold text-white mb-4">
-            {contrib.editcount.toLocaleString("bn-BD")}
-          </p>
-          <p className="text-gray-300 mb-4">টি সম্পাদনা</p>
-          <a
-            href={`${contrib.url}/wiki/Special:Contributions/${encodeURIComponent(
-              "জয়শ্রীরাম সরকার"
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-amber-500 hover:underline inline-flex items-center"
-            aria-label={`${WIKI_NAMES[contrib.wiki] || contrib.wiki}-এ অবদান দেখুন`}
-          >
-            অবদান দেখুন <ExternalLink className="ml-1 h-4 w-4" aria-hidden="true" />
-          </a>
+    <div>
+      <div className="mb-8 p-4 rounded border border-[var(--border)] bg-[var(--surface)] flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <span className="text-xs font-mono text-[var(--text-faint)] block mb-0.5">মোট উইকিমিডিয়া সম্পাদনা</span>
+          <span className="text-2xl font-bold font-mono text-[var(--accent-bengali)]">
+            {totalEdits.toLocaleString("bn-BD")}
+          </span>
         </div>
-      ))}
+        <div>
+          <span className="text-xs font-mono text-[var(--text-faint)] block mb-0.5">সক্রিয় প্রকল্প</span>
+          <span className="text-2xl font-bold font-mono text-[var(--text)]">
+            {contributions.length.toLocaleString("bn-BD")} টি
+          </span>
+        </div>
+        <a
+          href="https://meta.wikimedia.org/wiki/Special:CentralAuth/জয়শ্রীরাম_সরকার"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs font-medium text-[var(--accent-tech)] hover:underline inline-flex items-center gap-1"
+        >
+          গ্লোবাল অ্যাকাউন্ট প্রোফাইল
+          <ExternalLink className="w-3 h-3" />
+        </a>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {contributions.map((contrib) => (
+          <div
+            key={contrib.wiki}
+            className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded hover:border-[var(--border-strong)] transition-all flex flex-col justify-between"
+          >
+            <div>
+              <span className="text-xs font-mono text-[var(--text-faint)] uppercase block mb-1">
+                {contrib.wiki}
+              </span>
+              <h3 className="text-base font-semibold text-[var(--text)] mb-3">
+                {WIKI_NAMES[contrib.wiki] || contrib.wiki}
+              </h3>
+              <p className="text-2xl font-bold font-mono text-[var(--accent-bengali)] mb-1">
+                {contrib.editcount.toLocaleString("bn-BD")}
+              </p>
+              <p className="text-xs text-[var(--text-muted)]">টি সম্পাদনা সম্পন্ন</p>
+            </div>
+
+            <div className="pt-4 mt-4 border-t border-[var(--border)]">
+              <a
+                href={`${contrib.url}/wiki/Special:Contributions/${encodeURIComponent("জয়শ্রীরাম সরকার")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-medium text-[var(--text-muted)] hover:text-[var(--accent-bengali)] inline-flex items-center gap-1 transition-colors"
+                aria-label={`${WIKI_NAMES[contrib.wiki] || contrib.wiki}-এ অবদান দেখুন`}
+              >
+                অবদান তালিকা দেখুন <ExternalLink className="w-3 h-3" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function AllContributionsPage() {
   return (
-    <main className="min-h-screen bg-black text-white py-24">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center mb-12">
-          <Button variant="ghost" className="mr-4 hover:bg-gray-800" asChild>
-            <Link href="/" aria-label="ফিরে যান">
-              <ArrowLeft className="h-5 w-5" aria-hidden="true" />
-            </Link>
-          </Button>
-          <h1 className="text-3xl md:text-4xl font-bold bg-linear-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent font-hind-siliguri">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col font-hind-siliguri">
+      <header className="border-b border-[var(--border)] py-4 bg-[var(--bg)]">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between">
+          <Link
+            href="/open-source"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--text-muted)] hover:text-[var(--accent-bengali)] transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+            ওপেন সোর্স ড্যাশবোর্ডে ফিরুন
+          </Link>
+          <span className="text-xs font-mono text-[var(--text-faint)]">
+            WIKIMEDIA LIVE API
+          </span>
+        </div>
+      </header>
+
+      <main className="flex-1 max-w-6xl w-full mx-auto px-5 sm:px-8 pt-10 pb-20">
+        <div className="mb-10">
+          <div className="flex items-center gap-2 mb-2">
+            <Globe2 className="w-5 h-5 text-[var(--accent-tech)]" />
+            <p className="section-label text-[var(--accent-tech)]">VOLUNTEER KNOWLEDGE</p>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text)] tracking-tight mb-3">
             আমার সমস্ত উইকিমিডিয়া অবদান
           </h1>
+          <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-2xl leading-relaxed">
+            বাংলা উইকিপিডিয়া, উইকিমিডিয়া কমন্স, উইকিউপাত্ত এবং অন্যান্য উইকি প্রকল্পে মুক্ত জ্ঞানচর্চার রিয়েল-টাইম তথ্য।
+          </p>
         </div>
 
         <Suspense fallback={<ContributionsSkeleton />}>
           <ContributionsList />
         </Suspense>
-      </div>
-    </main>
+      </main>
+
+      <SiteFooter language="bn" />
+    </div>
   );
 }
