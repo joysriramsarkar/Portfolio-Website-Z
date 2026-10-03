@@ -173,7 +173,7 @@ export default function AllContributionsPage() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-5 sm:px-8 pt-10 pb-20">
+      <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-5 sm:px-8 pt-10 pb-20">
         <div className="mb-10">
           <div className="flex items-center gap-2 mb-2">
             <Globe2 className="w-5 h-5 text-[var(--accent-tech)]" />

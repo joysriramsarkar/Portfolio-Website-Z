@@ -77,7 +77,7 @@ export default async function ArticlePage({
         </div>
       </header>
 
-      <main className="flex-1 max-w-3xl w-full mx-auto px-5 sm:px-8 py-12">
+      <main id="main-content" className="flex-1 max-w-3xl w-full mx-auto px-5 sm:px-8 py-12">
         {/* Article header */}
         <header className="mb-10 pb-8 border-b border-[var(--border)]">
           <div className="flex items-center gap-3 text-xs font-mono text-[var(--text-faint)] mb-4">

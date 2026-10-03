@@ -8,17 +8,17 @@ import { ArrowLeft, X, Maximize2 } from 'lucide-react';
 import SiteHeader from '@/components/layout/Navbar';
 import SiteFooter from '@/components/layout/Footer';
 import { designs } from '@/data/designs';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function DesignsPage() {
-  const [language, setLanguage] = useState<'bn' | 'en'>('bn');
+  const { language, isBn, toggleLanguage } = useLanguage();
   const [activeImage, setActiveImage] = useState<{ src: string; title: string } | null>(null);
-  const isBn = language === 'bn';
 
   return (
     <div className={`min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col ${isBn ? 'font-hind-siliguri' : 'font-sans'}`}>
-      <SiteHeader language={language} onToggleLanguage={() => setLanguage((l) => (l === 'bn' ? 'en' : 'bn'))} />
+      <SiteHeader language={language} onToggleLanguage={toggleLanguage} />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-5 sm:px-8 pt-24 pb-20">
+      <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-5 sm:px-8 pt-24 pb-20">
         <Link
           href="/"
           className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--text-muted)] hover:text-[var(--accent-bengali)] transition-colors mb-8"

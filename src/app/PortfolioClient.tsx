@@ -16,13 +16,10 @@ import BuildLogStrip from '@/components/sections/BuildLogStrip';
 import AboutTeaser from '@/components/sections/AboutTeaser';
 import WritingTeaser from '@/components/sections/WritingTeaser';
 import Contact from '@/components/sections/Contact';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function PortfolioClient() {
-  const [language, setLanguage] = useState<'bn' | 'en'>('bn');
-
-  const toggleLanguage = () => {
-    setLanguage((prev) => (prev === 'bn' ? 'en' : 'bn'));
-  };
+  const { language, toggleLanguage } = useLanguage();
 
   return (
     <div
@@ -33,7 +30,7 @@ export default function PortfolioClient() {
       {/* 1. Header / Navbar */}
       <SiteHeader language={language} onToggleLanguage={toggleLanguage} />
 
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {/* 2. Hero */}
         <Hero language={language} />
 

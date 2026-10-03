@@ -26,12 +26,12 @@ const CATEGORIES = [
   { id: 'experiment',      labelEn: 'Experiments',       labelBn: 'এক্সপেরিমেন্ট' },
 ] as const;
 
+import { useLanguage } from '@/context/LanguageContext';
+
 export default function ProjectsCataloguePage() {
-  const [language, setLanguage] = useState<'bn' | 'en'>('bn');
+  const { language, isBn, toggleLanguage } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
-
-  const isBn = language === 'bn';
 
   const filteredProjects = useMemo(() => {
     return projects.filter((p) => {
@@ -51,9 +51,9 @@ export default function ProjectsCataloguePage() {
 
   return (
     <div className={`min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col ${isBn ? 'font-hind-siliguri' : 'font-sans'}`}>
-      <SiteHeader language={language} onToggleLanguage={() => setLanguage((l) => (l === 'bn' ? 'en' : 'bn'))} />
+      <SiteHeader language={language} onToggleLanguage={toggleLanguage} />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-5 sm:px-8 pt-24 pb-20">
+      <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-5 sm:px-8 pt-24 pb-20">
         {/* Header */}
         <div className="mb-10">
           <Link

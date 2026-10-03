@@ -33,6 +33,7 @@ export default function Contact({ language }: ContactProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
 
@@ -63,15 +64,35 @@ export default function Contact({ language }: ContactProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
+
+    // Honeypot check: if filled by a bot, silently succeed without calling API
+    if (honeypot.trim()) {
+      setName('');
+      setEmail('');
+      setMessage('');
+      setHoneypot('');
+      toast({
+        title: isBn ? '✅ বার্তা পাঠানো হয়েছে' : '✅ Message sent',
+        description: isBn
+          ? 'আপনার বার্তা সফলভাবে পাঠানো হয়েছে।'
+          : 'Your message was sent successfully.',
+      });
+      return;
+    }
+
     if (!validate()) return;
 
     setLoading(true);
     try {
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_h2tb4te';
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_mnfyq1f';
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'eFWK_fhLWe34_6NAh';
+
       await emailjs.send(
-        'service_h2tb4te',
-        'template_mnfyq1f',
+        serviceId,
+        templateId,
         { from_name: name, email, message },
-        'eFWK_fhLWe34_6NAh'
+        publicKey
       );
       toast({
         title: isBn ? '✅ বার্তা পাঠানো হয়েছে' : '✅ Message sent',
@@ -191,6 +212,8 @@ export default function Contact({ language }: ContactProps) {
               <input
                 type="text"
                 name="_honeypot"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
                 tabIndex={-1}
                 aria-hidden="true"
                 className="hidden"

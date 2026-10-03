@@ -15,10 +15,11 @@ const STATUS_CONFIG: Record<string, { labelEn: string; labelBn: string; color: s
   testing:      { labelEn: 'Testing',      labelBn: 'টেস্টিং',      color: 'text-emerald-700 bg-emerald-50 dark:text-emerald-300 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800' },
 };
 
+import { useLanguage } from '@/context/LanguageContext';
+
 export default function LabPage() {
-  const [language, setLanguage] = useState<'bn' | 'en'>('bn');
+  const { language, isBn, toggleLanguage } = useLanguage();
   const [filter, setFilter] = useState<string>('all');
-  const isBn = language === 'bn';
 
   const filteredItems = labItems.filter(
     (item) => filter === 'all' || item.status === filter
@@ -26,9 +27,9 @@ export default function LabPage() {
 
   return (
     <div className={`min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col ${isBn ? 'font-hind-siliguri' : 'font-sans'}`}>
-      <SiteHeader language={language} onToggleLanguage={() => setLanguage((l) => (l === 'bn' ? 'en' : 'bn'))} />
+      <SiteHeader language={language} onToggleLanguage={toggleLanguage} />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-5 sm:px-8 pt-24 pb-20">
+      <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-5 sm:px-8 pt-24 pb-20">
         <Link
           href="/"
           className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--text-muted)] hover:text-[var(--accent-bengali)] transition-colors mb-8"

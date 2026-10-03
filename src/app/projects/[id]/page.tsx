@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Github, CheckCircle2, Layers, Cpu, Database, Globe, ArrowRight } from 'lucide-react';
@@ -16,6 +17,42 @@ const STATUS_LABELS: Record<ProjectStatus, { en: string; bn: string }> = {
 
 export function generateStaticParams() {
   return projects.map((p) => ({ id: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ lang?: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const { lang } = await searchParams;
+  const isBn = lang !== 'en';
+  const project = getProject(id) || projects.find((p) => p.slug === id.toLowerCase());
+
+  if (!project) return { title: 'Project Not Found' };
+
+  const title = isBn ? `${project.nameBn} (${project.name})` : project.name;
+  const description = isBn ? project.descriptionBn : project.description;
+
+  return {
+    title: `${title} — কেস স্টাডি`,
+    description,
+    alternates: {
+      canonical: `https://joysriram.com/projects/${project.slug}`,
+      languages: {
+        bn: `https://joysriram.com/projects/${project.slug}?lang=bn`,
+        en: `https://joysriram.com/projects/${project.slug}?lang=en`,
+      },
+    },
+    openGraph: {
+      title: `${title} | Joysriram Sarkar`,
+      description,
+      url: `https://joysriram.com/projects/${project.slug}`,
+      type: 'article',
+    },
+  };
 }
 
 export default async function ProjectPage({
@@ -57,7 +94,7 @@ export default async function ProjectPage({
         </div>
       </header>
 
-      <main className="flex-1 max-w-4xl w-full mx-auto px-5 sm:px-8 py-12">
+      <main id="main-content" className="flex-1 max-w-4xl w-full mx-auto px-5 sm:px-8 py-12">
         {/* Project Header */}
         <div className="mb-10">
           <div className="flex flex-wrap items-center gap-3 mb-3">

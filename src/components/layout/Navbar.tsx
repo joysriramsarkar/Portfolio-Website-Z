@@ -6,10 +6,11 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface SiteHeaderProps {
-  language: 'bn' | 'en';
-  onToggleLanguage: () => void;
+  language?: 'bn' | 'en';
+  onToggleLanguage?: () => void;
 }
 
 const navLinks = [
@@ -21,7 +22,10 @@ const navLinks = [
   { href: '/writing',     labelEn: 'Writing',      labelBn: 'লেখা' },
 ] as const;
 
-export default function SiteHeader({ language, onToggleLanguage }: SiteHeaderProps) {
+export default function SiteHeader({ language: propLang, onToggleLanguage: propToggle }: SiteHeaderProps = {}) {
+  const { language: ctxLang, toggleLanguage: ctxToggle } = useLanguage();
+  const language = propLang ?? ctxLang;
+  const onToggleLanguage = propToggle ?? ctxToggle;
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

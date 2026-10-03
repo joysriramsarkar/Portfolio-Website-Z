@@ -1,70 +1,81 @@
-# Joysriram Sarkar — Personal Portfolio
+# Joysriram Sarkar — Personal Portfolio & Engineering Workshop
 
-Open-source repository for my personal engineering portfolio. Built with Bengali computing in mind — honest status badges, no vanity metrics, documented decisions.
+Canonical open-source repository for my personal engineering portfolio. Built with Bengali computing in mind — honest status badges, no vanity metrics, fully documented engineering decisions, and bilingual architecture.
 
 **Live site**: [https://joysriram.com](https://joysriram.com) · **Repository**: [joysriramsarkar/my-portfolio](https://github.com/joysriramsarkar/my-portfolio)
+
+> **Notice**: This is the single, active canonical repository for joysriram.com. All legacy prototypes, microservices, and unused scaffoldings have been removed in favor of a lean, production-grade Next.js App Router architecture.
 
 ---
 
 ## 🚀 Technology Stack
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) — custom design system, no component library styling
-- **UI Components**: [shadcn/ui](https://ui.shadcn.com/) (selected components only)
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router, Static Generation + Server Components)
+- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict type safety)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) — bespoke design system, Hind Siliguri + Poppins typography
+- **UI Primitives**: Curated [shadcn/ui](https://ui.shadcn.com/) components (`button`, `input`, `textarea`, `toast`, `toaster`)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Theme**: [next-themes](https://github.com/pacocoursey/next-themes) (dark/light mode)
+- **Theme**: [next-themes](https://github.com/pacocoursey/next-themes) (Light / Dark mode with system synchronization)
 - **Icons**: [Lucide React](https://lucide.dev/)
-- **Forms**: React Hook Form & Zod
-- **Email**: EmailJS
+- **Forms & Validation**: React Hook Form, Zod, and honeypot bot trap
+- **Email Delivery**: EmailJS integration via environment variables
+- **Continuous Integration**: GitHub Actions (`.github/workflows/ci.yml`)
 
-**Intentionally removed**: socket.io, next-auth, next-intl, @mdxeditor/editor, @dnd-kit, recharts, prisma, @prisma/client, embla-carousel, axios, uuid, z-ai-web-dev-sdk — none of these were used in production.
+**Strictly pruned**: Zero dead dependencies. Excised 24 unused npm libraries (Prisma, TanStack Query/Table, Zustand, Recharts, Socket.io, etc.), saving ~70 MB and drastically reducing bundle size and attack surface.
 
 ---
 
-## ✨ Features
+## ✨ Architectural Highlights
 
-- **Bilingual Support**: Bengali (primary) and English — custom translation system, no i18n framework.
-- **Dark Mode**: Toggled via Navbar — preference stored in localStorage via next-themes.
-- **Writing with URLs**: Each article has its own route (`/writing/[slug]`) — shareable, indexable, refresh-safe.
-- **Deep Case Studies**: Bangla Typing and POS include the actual problem, architecture decisions, what broke, and what was learned.
-- **JSON-LD Structured Data**: Person schema in `layout.tsx` for Google rich results.
-- **Dynamic OG Image**: `opengraph-image.tsx` generates a social preview card using next/og edge API.
-- **Mobile NOW strip**: The hero NOW section is visible on phones (not just `hidden lg:block`).
-- **SEO**: sitemap includes all project and writing article routes.
+- **Global Language Persistence**: Bengali (primary) & English. Seamlessly synchronizes state across routes via `LanguageProvider`, `localStorage`, URL search params (`?lang=en`), and dynamic `<html lang>` synchronization.
+- **Deep Technical Case Studies**: Detailed breakdowns of Bangla Typing, POS, Chalao, and Nilang — architecture decisions, failure modes, grapheme segmentation, and lessons learned.
+- **Dynamic SEO & Metadata**: 
+  - Dynamic `generateMetadata` for case studies and writing pieces.
+  - Multilingual sitemap (`sitemap.ts`) with `alternates.languages` (`bn` and `en`).
+  - Strict HTTP security headers (CSP, HSTS, X-Content-Type-Options, Permissions-Policy).
+  - Valid Schema.org `Person` JSON-LD structured data.
+- **Optimized Media Assets**: 100% WebP image pipelines with explicit dimensions and modern responsive srcset.
+- **Accessibility (a11y)**: Accessible skip-to-content mechanism (`#main-content`), proper ARIA labels, semantic landmark hierarchy, and screen-reader tested status badges.
 
 ---
 
 ## 🛠️ Getting Started
 
 ```bash
+# Clone the repository
 git clone https://github.com/joysriramsarkar/my-portfolio.git
 cd my-portfolio
+
+# Install production dependencies
 npm install
+
+# Run local development server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-No database setup needed — all data is statically typed in `src/data/`.
+All portfolio content is statically typed in `src/data/` — no external database required.
 
 ---
 
-## 📦 Commands
+## 📦 Scripts
 
-- `npm run dev` — Development server on port 3000
-- `npm run build` — Production build
-- `npm start` — Production server
-- `npm run lint` — ESLint
+- `npm run dev` — Start Next.js development server
+- `npm run build` — Build production bundle
+- `npm start` — Run production server
+- `npm run lint` — Run ESLint across entire repository
+- `npx tsc --noEmit` — Run TypeScript type-checker
 
 ---
 
-## 🤝 Contact
+## 🤝 Connect
 
 - **Email**: joysriram.sarkar.56@gmail.com
-- **GitHub**: [joysriramsarkar](https://github.com/joysriramsarkar)
-- **LinkedIn**: [Joysriram Sarkar](https://www.linkedin.com/in/joysriram-sarkar-abb282110/)
+- **GitHub**: [@joysriramsarkar](https://github.com/joysriramsarkar)
+- **LinkedIn**: [Joysriram Sarkar](https://www.linkedin.com/in/joyshriramsarkar/)
+- **X (Twitter)**: [@SarkarJoysriram](https://x.com/SarkarJoysriram)
 
 ---
 
-© 2026 Joysriram Sarkar.
+© 2026 Joysriram Sarkar. Released under the MIT License.
