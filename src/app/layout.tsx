@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Hind_Siliguri, Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "next-themes";
 
 const hindSiliguri = Hind_Siliguri({
   variable: "--font-hind-siliguri",
@@ -65,11 +66,34 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Joysriram Sarkar',
+    alternateName: 'জয়শ্রীরাম সরকার',
+    url: 'https://joysriram.com',
+    sameAs: [
+      'https://github.com/joysriramsarkar',
+    ],
+    jobTitle: 'AI-assisted Builder & Bengali Technologist',
+    knowsLanguage: ['bn', 'en'],
+    homeLocation: {
+      '@type': 'Place',
+      name: 'শিলিগুড়ি, পশ্চিমবঙ্গ, ভারত',
+    },
+  };
+
   return (
     <html lang="bn" suppressHydrationWarning className={`${hindSiliguri.variable} ${poppins.variable}`}>
       <body suppressHydrationWarning className="antialiased bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent-bengali)] selection:text-white">
-        {children}
-        <Toaster />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

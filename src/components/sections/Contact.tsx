@@ -23,7 +23,7 @@ interface ContactProps {
 
 const socialLinks = [
   { icon: Github, href: 'https://github.com/joysriramsarkar', label: 'GitHub' },
-  { icon: Linkedin, href: 'https://www.linkedin.com/in/জয়শ্রীরাম-সরকার-abb282110/', label: 'LinkedIn' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/joyshriramsarkar/', label: 'LinkedIn' },
   { icon: Twitter, href: 'https://x.com/SarkarJoysriram', label: 'Twitter / X' },
   { icon: Facebook, href: 'https://www.facebook.com/joysriramsarkar0', label: 'Facebook' },
 ];

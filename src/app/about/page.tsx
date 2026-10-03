@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, User, Code2, Compass, CheckCircle2, Award, Terminal } from 'lucide-react';
@@ -36,31 +37,60 @@ export default function AboutPage() {
           {isBn ? 'হোমে ফিরে যান' : 'Back to Home'}
         </Link>
 
-        {/* Narrative Intro */}
-        <div className="mb-14">
-          <p className="section-label text-[var(--accent-bengali)] mb-2">ABOUT JOYSRIRAM</p>
-          <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text)] tracking-tight mb-6">
-            {isBn
-              ? 'আমি প্রথাগত ধারায় আসিনি, এসেছি তৈরি করার তাগিদে'
-              : 'I didn’t enter technology through traditional credentials. I came into it by building.'}
-          </h1>
+        {/* Narrative Intro + Portrait */}
+        <div className="mb-14 grid md:grid-cols-[1fr_260px] gap-8 lg:gap-12 items-start">
+          <div>
+            <p className="section-label text-[var(--accent-bengali)] mb-2">ABOUT JOYSRIRAM</p>
+            <h1 className="text-3xl sm:text-5xl font-bold text-[var(--text)] tracking-tight mb-6">
+              {isBn
+                ? 'আমি প্রথাগত ধারায় আসিনি, এসেছি তৈরি করার তাগিদে'
+                : 'I didn’t enter technology through traditional credentials. I came into it by building.'}
+            </h1>
 
-          <div className="space-y-5 text-base sm:text-lg text-[var(--text-muted)] leading-relaxed prose-editorial">
-            <p>
-              {isBn
-                ? 'আমার পড়াশোনা বা যাত্রা কোনো প্রথাগত কম্পিউটার সায়েন্স বিভাগের ক্লাসরুম থেকে শুরু হয়নি। ২০১৯ সালে আমি বাংলা সাহিত্য ও কবিতার জগতে নিমগ্ন ছিলাম। কিন্তু যত সময় গেছে, বুঝতে পেরেছি যে প্রযুক্তি কেবল একটি কারিগরি পেশা নয়—এটি চিন্তার প্রকাশের সবচেয়ে শক্তিশালী মাধ্যম।'
-                : 'My journey did not begin in a conventional university computer science lecture hall. In 2019, I was deeply immersed in Bengali literature and poetic expression. Over time, I realized computing is not merely an engineering discipline—it is the most dynamic canvas for human thought and problem-solving.'}
-            </p>
-            <p>
-              {isBn
-                ? '২০২০ সাল থেকে নিজে নিজে লিনাক্স চালানো, নেটওয়ার্কিং শেখা এবং ছোট ছোট স্ক্রিপ্ট লেখার মাধ্যমে আমার প্রযুক্তির সাথে নিবিড় সম্পর্ক গড়ে ওঠে। আমি প্রতিটি জিনিস হাত দিয়ে বানিয়ে শিখেছি। ভুল হয়েছে, বারবার পরীক্ষা করেছি, এবং আস্তে আস্তে বাংলা টাইপিং, বাংলাগান ও চালাও-এর মতো বাস্তব পণ্য দাঁড় করিয়েছি।'
-                : 'From 2020 onward, self-hosting Linux systems, understanding networking protocols, and scripting in Python built my technical grounding. Every concept was learned through hands-on fabrication: breaking code, refactoring architectures, and incrementally constructing real software like Bangla Typing, BanglaGan, and POS systems.'}
-            </p>
-            <p>
-              {isBn
-                ? 'আজ আমি AI-সহায়ক ডেভেলপমেন্ট ওয়ার্কফ্লো ব্যবহার করি। এটি আমাকে দ্রুত প্রোটোটাইপিং থেকে শুরু করে পূর্ণাঙ্গ সফটওয়্যার তৈরি করতে সাহায্য করে। তবে সিস্টেম আর্কিটেকচার, ব্যবহারকারীর অনুভূতি এবং কোডের দায়ভার সবসময় আমার নিজের।'
-                : 'Today, I leverage an AI-assisted development workflow as an accelerator for prototyping and implementation. Yet the architecture design, edge-case testing, Bengali typographic empathy, and final code responsibility remain strictly mine.'}
-            </p>
+            <div className="space-y-5 text-base sm:text-lg text-[var(--text-muted)] leading-relaxed prose-editorial">
+              <p>
+                {isBn
+                  ? 'আমার পড়াশোনা বা যাত্রা কোনো প্রথাগত কম্পিউটার সায়েন্স বিভাগের ক্লাসরুম থেকে শুরু হয়নি। ২০১৯ সালে আমি বাংলা সাহিত্য ও কবিতার জগতে নিমগ্ন ছিলাম। কিন্তু যত সময় গেছে, বুঝতে পেরেছি যে প্রযুক্তি কেবল একটি কারিগরি পেশা নয়—এটি চিন্তার প্রকাশের সবচেয়ে শক্তিশালী মাধ্যম।'
+                  : 'My journey did not begin in a conventional university computer science lecture hall. In 2019, I was deeply immersed in Bengali literature and poetic expression. Over time, I realized computing is not merely an engineering discipline—it is the most dynamic canvas for human thought and problem-solving.'}
+              </p>
+              <p>
+                {isBn
+                  ? '২০২০ সাল থেকে নিজে নিজে লিনাক্স চালানো, নেটওয়ার্কিং শেখা এবং ছোট ছোট স্ক্রিপ্ট লেখার মাধ্যমে আমার প্রযুক্তির সাথে নিবিড় সম্পর্ক গড়ে ওঠে। আমি প্রতিটি জিনিস হাত দিয়ে বানিয়ে শিখেছি। ভুল হয়েছে, বারবার পরীক্ষা করেছি, এবং আস্তে আস্তে বাংলা টাইপিং, বাংলাগান ও চালাও-এর মতো বাস্তব পণ্য দাঁড় করিয়েছি।'
+                  : 'From 2020 onward, self-hosting Linux systems, understanding networking protocols, and scripting in Python built my technical grounding. Every concept was learned through hands-on fabrication: breaking code, refactoring architectures, and incrementally constructing real software like Bangla Typing, BanglaGan, and POS systems.'}
+              </p>
+              <p>
+                {isBn
+                  ? 'আজ আমি AI-সহায়ক ডেভেলপমেন্ট ওয়ার্কফ্লো ব্যবহার করি। এটি আমাকে দ্রুত প্রোটোটাইপিং থেকে শুরু করে পূর্ণাঙ্গ সফটওয়্যার তৈরি করতে সাহায্য করে। তবে সিস্টেম আর্কিটেকচার, ব্যবহারকারীর অনুভূতি এবং কোডের দায়ভার সবসময় আমার নিজের।'
+                  : 'Today, I leverage an AI-assisted development workflow as an accelerator for prototyping and implementation. Yet the architecture design, edge-case testing, Bengali typographic empathy, and final code responsibility remain strictly mine.'}
+              </p>
+            </div>
+          </div>
+
+          {/* Author Portrait Card */}
+          <div className="bg-[var(--surface)] p-2.5 rounded border border-[var(--border)] shadow-sm">
+            <div className="relative aspect-[4/5] w-full rounded overflow-hidden bg-[var(--surface-2)]">
+              <Image
+                src="/profile.webp"
+                alt={isBn ? "জয়শ্রীরাম সরকার — প্রতিকৃতি" : "Joysriram Sarkar — Portrait"}
+                fill
+                priority
+                quality={95}
+                sizes="(min-width: 768px) 260px, 100vw"
+                className="object-cover object-top"
+              />
+            </div>
+            <div className="mt-3 px-1">
+              <p className="text-xs font-semibold text-[var(--text)]">
+                {isBn ? 'জয়শ্রীরাম সরকার' : 'Joysriram Sarkar'}
+              </p>
+              <p className="text-[11px] font-mono text-[var(--text-faint)] mt-0.5">
+                {isBn ? 'শিলিগুড়ি, পশ্চিমবঙ্গ · ভারত' : 'Siliguri, West Bengal · India'}
+              </p>
+              <div className="mt-3 pt-2.5 border-t border-[var(--border)] flex items-center justify-between text-[10px] font-mono text-[var(--text-muted)]">
+                <span>{isBn ? 'অভিজ্ঞতা' : 'Focus'}</span>
+                <span className="text-[var(--accent-bengali)] font-semibold">{isBn ? '২০১৯ থেকে' : 'Since 2019'}</span>
+              </div>
+            </div>
           </div>
         </div>
 

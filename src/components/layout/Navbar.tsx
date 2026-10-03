@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 interface SiteHeaderProps {
   language: 'bn' | 'en';
@@ -24,7 +25,11 @@ export default function SiteHeader({ language, onToggleLanguage }: SiteHeaderPro
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const isBn = language === 'bn';
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -85,6 +90,17 @@ export default function SiteHeader({ language, onToggleLanguage }: SiteHeaderPro
           >
             {isBn ? 'EN' : 'BN'}
           </button>
+
+          {/* Dark mode toggle */}
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="p-1.5 rounded border border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--accent-bengali)] hover:text-[var(--accent-bengali)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-bengali)]"
+            >
+              {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+            </button>
+          )}
 
           {/* Mobile menu toggle */}
           <button

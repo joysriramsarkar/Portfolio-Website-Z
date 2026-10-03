@@ -4,7 +4,6 @@ import { ArrowLeft, ExternalLink, Github, CheckCircle2, Layers, Cpu, Database, G
 import SiteHeader from '@/components/layout/Navbar';
 import SiteFooter from '@/components/layout/Footer';
 import { projects, getProject, type ProjectStatus } from '@/data/projects';
-import ProjectDetailsClient from './ProjectDetailsClient';
 
 const STATUS_LABELS: Record<ProjectStatus, { en: string; bn: string }> = {
   live:       { en: 'Live',       bn: 'লাইভ' },
@@ -124,33 +123,33 @@ export default async function ProjectPage({
         )}
 
         {/* Problem & Solution */}
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          <div className="p-6 rounded border border-[var(--border)] bg-[var(--surface)]">
-            <span className="section-label text-[var(--accent-bengali)] block mb-2">01 / THE PROBLEM</span>
-            <h3 className="text-base font-semibold text-[var(--text)] mb-3">
-              {isBn ? 'সমস্যা ও প্রয়োজনীয়তা' : 'The Challenge'}
-            </h3>
-            <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
-              {project.problem ||
-                (isBn
-                  ? 'উন্মুক্ত ও সংগঠিত তথ্যের অভাব, অথবা বাংলা ভাষার জন্য আধুনিক ও সহজে ব্যবহারযোগ্য সফটওয়্যারের সীমাবদ্ধতা।'
-                  : 'Lack of organized accessibility and structured interfaces suited for modern Bengali computing users.')}
-            </p>
-          </div>
+        {(project.problem || project.solution) && (
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            {project.problem && (
+              <div className="p-6 rounded border border-[var(--border)] bg-[var(--surface)]">
+                <span className="section-label text-[var(--accent-bengali)] block mb-2">01 / THE PROBLEM</span>
+                <h3 className="text-base font-semibold text-[var(--text)] mb-3">
+                  {isBn ? 'সমস্যা ও প্রয়োজনীয়তা' : 'The Challenge'}
+                </h3>
+                <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
+                  {isBn ? project.problemBn || project.problem : project.problem}
+                </p>
+              </div>
+            )}
 
-          <div className="p-6 rounded border border-[var(--border)] bg-[var(--surface)]">
-            <span className="section-label text-[var(--accent-tech)] block mb-2">02 / THE SOLUTION</span>
-            <h3 className="text-base font-semibold text-[var(--text)] mb-3">
-              {isBn ? 'সমাধান ও বাস্তবায়ন' : 'The Solution'}
-            </h3>
-            <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
-              {project.solution ||
-                (isBn
-                  ? 'AI-সহায়ক গতিশীল উন্নয়ন এবং আধুনিক ওয়েব প্রযুক্তির সমন্বয়ে নির্ভরযোগ্য আর্কিটেকচার তৈরি।'
-                  : 'An intuitive, accessible platform engineered using modern web primitives with offline capabilities.')}
-            </p>
+            {project.solution && (
+              <div className="p-6 rounded border border-[var(--border)] bg-[var(--surface)]">
+                <span className="section-label text-[var(--accent-tech)] block mb-2">02 / THE SOLUTION</span>
+                <h3 className="text-base font-semibold text-[var(--text)] mb-3">
+                  {isBn ? 'সমাধান ও বাস্তবায়ন' : 'The Solution'}
+                </h3>
+                <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
+                  {isBn ? project.solutionBn || project.solution : project.solution}
+                </p>
+              </div>
+            )}
           </div>
-        </div>
+        )}
 
         {/* Technical Architecture */}
         <div className="p-6 sm:p-8 rounded border border-[var(--border)] bg-[var(--surface)] mb-12">
@@ -202,7 +201,7 @@ export default async function ProjectPage({
               {isBn ? 'এই প্রজেক্ট থেকে যা শিখেছি' : 'Key Takeaways & Engineering Insights'}
             </h3>
             <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
-              {project.lessons}
+              {isBn ? project.lessonsBn || project.lessons : project.lessons}
             </p>
           </div>
         )}

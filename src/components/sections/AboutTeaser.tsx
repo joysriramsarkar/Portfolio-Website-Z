@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
@@ -18,6 +19,26 @@ export default function AboutTeaser({ language }: AboutTeaserProps) {
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 items-start">
           {/* Left Column: Narrative */}
           <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="relative w-11 h-11 rounded-full overflow-hidden border border-[var(--border)] shrink-0">
+                <Image
+                  src="/profile.webp"
+                  alt={isBn ? "জয়শ্রীরাম সরকার" : "Joysriram Sarkar"}
+                  fill
+                  quality={95}
+                  sizes="44px"
+                  className="object-cover object-top"
+                />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-[var(--text)] leading-tight">
+                  {isBn ? 'জয়শ্রীরাম সরকার' : 'Joysriram Sarkar'}
+                </p>
+                <p className="text-[11px] font-mono text-[var(--text-faint)]">
+                  {isBn ? 'শিলিগুড়ি, ভারত · ২০১৯ থেকে সক্রিয়' : 'Siliguri, India · Active since 2019'}
+                </p>
+              </div>
+            </div>
             <p className="section-label text-[var(--accent-bengali)] mb-2">05 / ABOUT</p>
             <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text)] mb-6">
               {isBn

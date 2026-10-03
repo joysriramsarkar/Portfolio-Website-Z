@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { projects } from '@/data/projects';
+import { articles } from '@/data/writing';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://joysriram.com';
@@ -10,6 +11,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
     changeFrequency: 'monthly',
     priority: p.featured ? 0.9 : 0.7,
+  }));
+
+  const writingEntries: MetadataRoute.Sitemap = articles.map((a) => ({
+    url: `${baseUrl}/writing/${a.slug}`,
+    lastModified: new Date(a.date),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
   }));
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -24,5 +32,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/contributions`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
   ];
 
-  return [...staticRoutes, ...projectEntries];
+  return [...staticRoutes, ...projectEntries, ...writingEntries];
 }

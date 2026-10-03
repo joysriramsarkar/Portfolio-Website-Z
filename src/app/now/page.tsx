@@ -7,11 +7,25 @@ import { ArrowLeft, Clock, Hammer, GraduationCap, Compass, BookOpen, Sparkles } 
 import SiteHeader from '@/components/layout/Navbar';
 import SiteFooter from '@/components/layout/Footer';
 
+interface NowItem {
+  name: string;
+  desc: string;
+  link?: string;
+}
+
+interface NowSection {
+  icon: React.ComponentType<{ className?: string }>;
+  titleEn: string;
+  titleBn: string;
+  color: string;
+  items: NowItem[];
+}
+
 export default function NowPage() {
   const [language, setLanguage] = useState<'bn' | 'en'>('bn');
   const isBn = language === 'bn';
 
-  const sections = [
+  const sections: NowSection[] = [
     {
       icon: Hammer,
       titleEn: 'What I Am Building',

@@ -38,7 +38,7 @@ export default function SiteFooter({ language }: SiteFooterProps) {
             </Link>
             <p className="text-[var(--text-faint)] text-xs mt-1 leading-relaxed max-w-[240px]">
               {isBn
-                ? 'AI-সহায়ক builder · বাংলা-প্রথম প্রযুক্তি · ওপেন সোর্স'
+                ? 'AI-সহায়ক নির্মাতা · বাংলা-প্রথম প্রযুক্তি · ওপেন সোর্স'
                 : 'AI-assisted builder · Bengali-first tech · Open source'}
             </p>
             <div className="flex gap-3 mt-4">
